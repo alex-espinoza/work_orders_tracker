@@ -3,5 +3,7 @@ class User < ActiveRecord::Base
 
   has_many :responses
   has_many :orders
+  has_many :workers, foreign_key => "manager_id"
+  has_many :managers, through => :workers
   belongs_to :team
 end
