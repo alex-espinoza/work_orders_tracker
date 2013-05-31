@@ -11,13 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528213141) do
+ActiveRecord::Schema.define(:version => 20130531004221) do
 
   create_table "order_responses", :force => true do |t|
     t.text     "response"
     t.string   "file_attachment"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "order_id"
+    t.integer  "user_id"
   end
 
   create_table "orders", :force => true do |t|
@@ -28,6 +30,9 @@ ActiveRecord::Schema.define(:version => 20130528213141) do
     t.string   "status"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "team_id"
+    t.integer  "manager_id"
+    t.integer  "worker_id"
   end
 
   create_table "teams", :force => true do |t|
@@ -44,6 +49,8 @@ ActiveRecord::Schema.define(:version => 20130528213141) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "role"
+    t.integer  "team_id"
+    t.integer  "manager_id"
   end
 
 end

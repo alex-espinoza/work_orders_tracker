@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :first_name, :last_name, :password, :role
+  attr_accessible :email, :first_name, :last_name, :password, :role, :team_id, :manager_id
 
   has_many :responses
   has_many :orders
