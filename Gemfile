@@ -20,6 +20,20 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :test, :development do
+	gem 'rspec-rails'
+	gem 'capybara'
+	gem 'launchy'
+end
+
+group :test do
+	gem 'factory_girl_rails'
+end
+
+group :development do
+	gem 'sextant'
+end
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password

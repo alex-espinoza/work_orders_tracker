@@ -3,4 +3,6 @@ class OrderResponse < ActiveRecord::Base
 
   belongs_to :order
   belongs_to :user
+
+  validates_presence_of :file_attachment, :response, :order_id, :user_id
 end

@@ -3,4 +3,6 @@ class Team < ActiveRecord::Base
 
   has_many :users
   has_many :orders
+
+  validates_presence_of :team_name
 end
