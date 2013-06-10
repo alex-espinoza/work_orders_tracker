@@ -1,4 +1,12 @@
 WorkOrdersTracker::Application.routes.draw do
+  get "user/index"
+
+  get "team/index"
+
+  get "order_response/index"
+
+  get "order/index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
