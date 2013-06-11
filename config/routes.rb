@@ -12,6 +12,8 @@ WorkOrdersTracker::Application.routes.draw do
   resources :team
   resources :user
 
+  root :to => "orderr#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
