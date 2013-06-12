@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :first_name, :last_name, :password, :role, :team_id, :manager_id
+	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+
+  attr_accessible :email, :first_name, :last_name, :encrypted_password, :role, :team_id, :manager_id, :password, :password_confirmation, :remember_me
 
   has_many :responses
   has_many :orders
@@ -7,5 +9,6 @@ class User < ActiveRecord::Base
   has_many :managers, :through => :workers
   belongs_to :team
 
-  validates_presence_of :email, :first_name, :last_name, :password, :role, :team_id, :manager_id
+  # validates_presence_of :email, :first_name, :last_name, :encrypted_password, :role, :team_id, :manager_id, :password, :password_confirmation, :remember_me
+  validates_presence_of :email, :password, :password_confirmation
 end
