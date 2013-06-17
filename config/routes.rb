@@ -7,14 +7,14 @@ WorkOrdersTracker::Application.routes.draw do
 
   # get "order/index"
 
-  devise_for :user
+  root :to => "order#index"
+
+  devise_for :user, :controllers => { :registrations => "registrations" }
 
   resources :order
   resources :order_response
   resources :team
   resources :user
-
-  root :to => "order#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
