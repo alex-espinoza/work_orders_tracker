@@ -129,6 +129,8 @@ GEM
     sextant (0.2.3)
       activesupport (>= 3.2)
       rails (>= 3.2)
+    shoulda-matchers (2.2.0)
+      activesupport (>= 3.0.0)
     slop (3.4.4)
     sprockets (2.2.2)
       hike (~> 1.2)
@@ -165,4 +167,5 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 3.2.3)
   sextant
+  shoulda-matchers
   uglifier (>= 1.0.3)

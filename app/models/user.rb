@@ -3,19 +3,14 @@ class User < ActiveRecord::Base
 
   attr_accessible :email, :first_name, :last_name, :encrypted_password, :role, :team_id, :manager_id, :password, :password_confirmation, :remember_me
 
-  has_many :responses
+  has_many :responses, :class_name => "OrderResponse"
   has_many :orders
+  has_many :order_responses
   has_many :workers, :foreign_key => "manager_id"
   has_many :managers, :through => :workers
   belongs_to :team
 
-  # validates_presence_of :email, :first_name, :last_name, :encrypted_password, :role, :team_id, :manager_id, :password, :password_confirmation, :remember_me
-  validates_presence_of :email, :password, :password_confirmation
-
-  def self.role_select
-  	[
-  		["Manager - I will be issuing work orders.", "manager"],
-  		["Worker - I will be receiving work orders.", "worker"]
-  	]
-  end
+  validates_presence_of :first_name, :last_name, :email, :password, :password_confirmation
+  validates_format_of :email, :with => /@/
+  validates_uniqueness_of :email
 end

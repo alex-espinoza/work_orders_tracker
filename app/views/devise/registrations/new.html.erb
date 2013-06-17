@@ -9,9 +9,6 @@
   <div><%= f.label :last_name %><br />
   <%= f.text_field :last_name %></div>
 
-  <div><%= f.label :role %><br />
-  <%= f.select :role, User.role_select, include_blank: true %></div>
-
   <div><%= f.label :email, "Email address" %><br />
   <%= f.email_field :email %></div>
 
