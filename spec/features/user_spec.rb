@@ -1,29 +1,20 @@
 require 'spec_helper'
 
 describe "User" do
-	let(:register_new_user) do
-		user = FactoryGirl.build(:user_registration)
-		visit new_user_registration_path
-		fill_in "First name", :with => user.first_name
-		fill_in "Last name", :with => user.last_name
-		fill_in "Email address", :with => user.email
-		fill_in "Password", :with => user.password
-		fill_in "Password confirmation", :with => user.password_confirmation
-	end
+	let(:new_user_1) { FactoryGirl.build(:valid_user) }
+	let(:new_user_2) { FactoryGirl.build(:invalid_user) }
 
 	describe "- when signing up -" do
-		it "should be redirected to the order index page on successful registration." do
-			register_new_user
-			click_button "Sign up"
-			expect(page).to have_content("Order#index")
+		it "will be redirected to the team creation page on successful registration." do
+			sign_up_as(new_user_1)
+			expect(page).to have_content("Team#index")
+			expect(User.all.count).to eq(1)
 		end
 
-		it "should show an error and stay on the sign up page on an invalid registration attempt." do
-			register_new_user
-			fill_in "First name", :with => ""
-			fill_in "Email address", :with => ""
-			click_button "Sign up"
+		it "will show an error and stay on the sign up page on an invalid registration attempt." do
+			sign_up_as(new_user_2)
 			expect(page).to have_content("errors prohibited this user from being saved")
+			expect(User.all.count).to eq(0)
 		end
 	end
 end

@@ -14,39 +14,39 @@
 ActiveRecord::Schema.define(:version => 20130612194352) do
 
   create_table "order_responses", :force => true do |t|
-    t.text     "response",        :null => false
+    t.text     "response"
     t.string   "file_attachment"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.integer  "order_id",        :null => false
-    t.integer  "user_id",         :null => false
+    t.integer  "order_id"
+    t.integer  "user_id"
   end
 
   create_table "orders", :force => true do |t|
-    t.string   "name",            :null => false
-    t.text     "description",     :null => false
-    t.boolean  "high_priority",   :null => false
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "high_priority"
     t.string   "file_attachment"
-    t.string   "status",          :null => false
+    t.string   "status"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.integer  "team_id",         :null => false
-    t.integer  "manager_id",      :null => false
-    t.integer  "worker_id",       :null => false
+    t.integer  "team_id"
+    t.integer  "manager_id"
+    t.integer  "worker_id"
   end
 
   create_table "teams", :force => true do |t|
-    t.string   "team_name",  :null => false
+    t.string   "team_name", :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
-    t.string   "first_name",                             :null => false
-    t.string   "last_name",                              :null => false
+    t.string   "first_name"
+    t.string   "last_name"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "role",                                   :null => false
+    t.string   "role"
     t.integer  "team_id"
     t.integer  "manager_id"
     t.string   "email",                  :default => "", :null => false
