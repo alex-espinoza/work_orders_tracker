@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+	devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :first_name, :last_name, :encrypted_password, :role, :team_id, :manager_id, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :first_name, :last_name, :encrypted_password, :role, :team_id, :manager_id, :password, :password_confirmation, :remember_me, :skip_invitation
 
   has_many :responses, :class_name => "OrderResponse"
   has_many :orders
