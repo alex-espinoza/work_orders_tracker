@@ -9,9 +9,17 @@ WorkOrdersTracker::Application.routes.draw do
 
   root :to => "teams#index"
 
-  devise_for :user, :controllers => { :registrations => "registrations" }
+  devise_for :users, :controllers => { :registrations => "registrations" }
 
-  resources :order, :order_response, :teams, :user
+  resources :teams do
+    resources :orders
+  end
+
+  resources :orders do
+    resources :order_responses
+  end
+
+  resources :users
   resources :team_invitations, :only => :index
 
   # The priority is based upon order of creation:

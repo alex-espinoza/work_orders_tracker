@@ -5,9 +5,9 @@ describe "User" do
 	let(:new_user_2) { FactoryGirl.build(:invalid_user) }
 
 	describe "- when signing up -" do
-		it "will be redirected to the team creation page on successful registration." do
+		it "will be redirected to the team index page on successful registration." do
 			sign_up_as(new_user_1)
-			expect(page).to have_content("Team#index")
+			expect(page).to have_content("Teams#index")
 			expect(User.all.count).to eq(1)
 		end
 

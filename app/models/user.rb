@@ -1,14 +1,17 @@
 class User < ActiveRecord::Base
 	devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :first_name, :last_name, :encrypted_password, :role, :team_id, :manager_id, :password, :password_confirmation, :remember_me, :skip_invitation
+  attr_accessible :email, :first_name, :last_name, :encrypted_password, :password, :password_confirmation, :remember_me, :skip_invitation
 
-  has_many :responses, :class_name => "OrderResponse"
-  has_many :orders
-  has_many :order_responses
-  has_many :workers, :foreign_key => "manager_id"
-  has_many :managers, :through => :workers
-  belongs_to :team
+  has_many :orders,
+    inverse_of: :user
+
+  has_many :order_responses,
+    inverse_of: :user
+
+  has_many :teams,
+    through: :team_memberships,
+    inverse_of: :user
 
   validates_presence_of :first_name, :last_name, :email, :password, :password_confirmation
   validates_format_of :email, :with => /@/

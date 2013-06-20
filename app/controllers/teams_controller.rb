@@ -12,7 +12,7 @@ class TeamsController < ApplicationController
   	@team = Team.new(params[:team])
 
   	if @team.save
-  		redirect_to team_invitations_path
+  		redirect_to teams_path
   	else
   		render action: "new"
   	end

@@ -1,4 +1,4 @@
-class OrderResponseController < ApplicationController
+class OrderResponsesController < ApplicationController
   before_filter :authenticate_user!
 
   def index

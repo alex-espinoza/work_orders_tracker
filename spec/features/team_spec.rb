@@ -4,12 +4,12 @@ describe "Team" do
 	let(:new_manager) { FactoryGirl.build(:valid_manager) }
 
 	describe "- when being created -" do
-		it "will redirect to worker invite page on successful team creation." do
+		it "will redirect to team index page on successful team creation." do
 			sign_up_as(new_manager)
 			click_link "Create new team"
 			fill_in "Team name", :with => "Launch Academy Maintenance Team"
 			click_button "Create team"
-			expect(page).to have_content("TeamInvitations#index")
+			expect(page).to have_content("Teams#index")
 			expect(Team.all.count).to eq(1)
 		end
 	end
