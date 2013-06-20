@@ -17,5 +17,5 @@ class Order < ActiveRecord::Base
   belongs_to :team,
   	inverse_of: :orders
 
-  validates_presence_of :description, :file_attachment, :high_priority, :name, :status, :team_id, :manager_id, :worker_id
+  validates_presence_of :description, :name, :status, :team_id, :manager_id, :worker_id
 end

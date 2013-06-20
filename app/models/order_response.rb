@@ -7,5 +7,5 @@ class OrderResponse < ActiveRecord::Base
   belongs_to :user,
   	inverse_of: :order_responses
 
-  validates_presence_of :file_attachment, :response, :order_id, :user_id
+  validates_presence_of :response, :order_id, :user_id
 end

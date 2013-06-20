@@ -19,39 +19,39 @@ ActiveRecord::Schema.define(:version => 20130620005456) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.integer  "order_id",        :null => false
-    t.integer  "user_id",         :null => false
+    t.integer  "user_id",        :null => false
   end
 
   create_table "orders", :force => true do |t|
-    t.string   "name",            :null => false
-    t.text     "description",     :null => false
+    t.string   "name",        :null => false
+    t.text     "description",        :null => false
     t.boolean  "high_priority"
     t.string   "file_attachment"
-    t.string   "status",          :null => false
+    t.string   "status",        :null => false
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.integer  "team_id",         :null => false
-    t.integer  "manager_id",      :null => false
-    t.integer  "worker_id",       :null => false
+    t.integer  "team_id"
+    t.integer  "manager_id",        :null => false
+    t.integer  "worker_id",        :null => false
   end
 
   create_table "team_memberships", :force => true do |t|
-    t.string   "role",       :null => false
-    t.integer  "user_id",    :null => false
-    t.integer  "team_id",    :null => false
+    t.string   "role",        :null => false
+    t.integer  "user_id",        :null => false
+    t.integer  "team_id",        :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "teams", :force => true do |t|
-    t.string   "team_name",  :null => false
+    t.string   "team_name",        :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
-    t.string   "first_name",                                           :null => false
-    t.string   "last_name",                                            :null => false
+    t.string   "first_name",        :null => false
+    t.string   "last_name",        :null => false
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
     t.string   "email",                                :default => "", :null => false
