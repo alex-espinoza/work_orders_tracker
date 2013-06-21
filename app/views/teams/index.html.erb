@@ -1,2 +1,14 @@
 <h1>Teams#index</h1>
 <%= link_to "Create new team", new_team_path %>
+
+<h3>Teams</h3>
+	<table>
+		<tr>
+			<td>Name</td>
+		</tr>
+		<% @team.each do |team| %>
+		<tr>
+			<td><%= team.team_name %></td>
+		</tr>
+		<% end %>
+	</table>

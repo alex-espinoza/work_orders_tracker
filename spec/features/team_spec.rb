@@ -9,8 +9,9 @@ describe "Team" do
 			click_link "Create new team"
 			fill_in "Team name", :with => "Launch Academy Maintenance Team"
 			click_button "Create team"
-			expect(page).to have_content("Teams#index")
+			expect(page).to have_content("Launch Academy Maintenance Team")
 			expect(Team.all.count).to eq(1)
+			expect(TeamMembership.all.count).to eq(1)
 		end
 	end
 
@@ -22,6 +23,7 @@ describe "Team" do
 			click_button "Create team"
 			expect(page).to have_content("error prohibited this app from being saved")
 			expect(Team.all.count).to eq(0)
+			expect(TeamMembership.all.count).to eq(0)
 		end
 	end
 end

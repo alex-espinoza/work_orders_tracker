@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe User do
-	# it { should have_many(:orders) } ### Find another way to test, orders will not have a user_id, instead will have worker_id and manager_id
+	it { should have_many(:manager_orders) }
+	it { should have_many(:worker_orders) }
 	it { should have_many(:order_responses) }
+	it { should have_many(:teams) }
+	it { should have_many(:team_memberships) }
 
 	it { should validate_presence_of(:first_name) }
 	it { should validate_presence_of(:last_name) }

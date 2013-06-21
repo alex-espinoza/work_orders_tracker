@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130620005456) do
+ActiveRecord::Schema.define(:version => 20130621011825) do
 
   create_table "order_responses", :force => true do |t|
     t.text     "response",        :null => false
@@ -19,42 +19,42 @@ ActiveRecord::Schema.define(:version => 20130620005456) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.integer  "order_id",        :null => false
-    t.integer  "user_id",        :null => false
+    t.integer  "user_id",         :null => false
   end
 
   create_table "orders", :force => true do |t|
-    t.string   "name",        :null => false
-    t.text     "description",        :null => false
+    t.string   "name",            :null => false
+    t.text     "description",     :null => false
     t.boolean  "high_priority"
     t.string   "file_attachment"
-    t.string   "status",        :null => false
+    t.string   "status",          :null => false
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.integer  "team_id"
-    t.integer  "manager_id",        :null => false
-    t.integer  "worker_id",        :null => false
+    t.integer  "team_id",         :null => false
+    t.integer  "manager_id",      :null => false
+    t.integer  "worker_id",       :null => false
   end
 
   create_table "team_memberships", :force => true do |t|
-    t.string   "role",        :null => false
-    t.integer  "user_id",        :null => false
-    t.integer  "team_id",        :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "role",       :default => "worker", :null => false
+    t.integer  "user_id",                          :null => false
+    t.integer  "team_id",                          :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   create_table "teams", :force => true do |t|
-    t.string   "team_name",        :null => false
+    t.string   "team_name",  :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
-    t.string   "first_name",        :null => false
-    t.string   "last_name",        :null => false
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.string   "email",                                :default => "", :null => false
+    t.string   "first_name",                           :default => "FIRST", :null => false
+    t.string   "last_name",                            :default => "LAST",  :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
+    t.string   "email",                                :default => "",      :null => false
     t.string   "encrypted_password",                   :default => ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
