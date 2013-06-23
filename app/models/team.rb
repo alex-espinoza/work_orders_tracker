@@ -10,5 +10,9 @@ class Team < ActiveRecord::Base
   has_many :orders,
   	inverse_of: :team
 
+  has_many :team_invitations,
+  	inverse_of: :team
+
   validates_presence_of :team_name
+  validates_length_of :team_name, :maximum => 100
 end

@@ -21,7 +21,7 @@ describe "Team" do
 			click_link "Create new team"
 			fill_in "Team name", :with => ""
 			click_button "Create team"
-			expect(page).to have_content("error prohibited this app from being saved")
+			expect(page).to have_content("error prohibited this team from being created")
 			expect(Team.all.count).to eq(0)
 			expect(TeamMembership.all.count).to eq(0)
 		end

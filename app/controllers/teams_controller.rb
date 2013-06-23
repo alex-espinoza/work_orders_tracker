@@ -5,6 +5,10 @@ class TeamsController < ApplicationController
     @team = current_user.teams.all
   end
 
+  def show
+    @team = Team.find(params[:id])
+  end
+
   def new
   	@team = Team.new
   end

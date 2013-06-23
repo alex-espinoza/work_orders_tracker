@@ -13,6 +13,7 @@ WorkOrdersTracker::Application.routes.draw do
 
   resources :teams do
     resources :orders
+    resources :team_invitations, :only => [:new, :create]
   end
 
   resources :orders do

@@ -18,4 +18,5 @@ class Order < ActiveRecord::Base
   	inverse_of: :orders
 
   validates_presence_of :description, :name, :status, :team_id, :manager_id, :worker_id
+  validates_length_of :name, :maximum => 140
 end

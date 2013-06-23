@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-	devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+  ### Add DESTROY dependent associations
+	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
   attr_accessible :email, :first_name, :last_name, :encrypted_password, :password, :password_confirmation, :remember_me, :skip_invitation
 
@@ -20,7 +21,16 @@ class User < ActiveRecord::Base
   has_many :team_memberships,
     inverse_of: :user
 
+  has_many :sent_invitations,
+    :foreign_key => "sender_id",
+    :class_name => "Invitation"
+
+  belongs_to :invitation
+
   validates_presence_of :first_name, :last_name, :email, :password, :password_confirmation
   validates_format_of :email, :with => /@/
-  validates_uniqueness_of :email
+  validates_uniqueness_of :email, :case_sensitive => false
+  validates_length_of :email, :within => 6..100 # a@a.co
+  validates_length_of :first_name, :maximum => 50
+  validates_length_of :last_name, :maximum => 50
 end

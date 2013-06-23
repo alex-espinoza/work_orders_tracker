@@ -24,4 +24,12 @@ FactoryGirl.define do
 		password "12341234"
 		password_confirmation "12341234"
 	end
+
+	factory :new_user, class: User do
+		first_name "John"
+		last_name "Doe"
+		email "johndoe@test.com"
+		password "12341234"
+		password_confirmation "12341234"
+	end
 end
