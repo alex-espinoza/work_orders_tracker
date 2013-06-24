@@ -6,4 +6,7 @@ describe Team do
 	it { should have_many(:users) }
 	it { should have_many(:orders) }
 	it { should have_many(:team_memberships) }
+	it { should have_many(:team_invitations) }
+
+	it { should ensure_length_of(:team_name).is_at_most(100)}
 end

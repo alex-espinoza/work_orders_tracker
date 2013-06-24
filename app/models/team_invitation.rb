@@ -5,7 +5,7 @@ class TeamInvitation < ActiveRecord::Base
   belongs_to :sender, :class_name => "User"
   has_one :recipient, :class_name => "User", :foreign_key => "recipient_email"
 
-  validates_presence_of :recipient_email
+  validates_presence_of :recipient_email, :sender_id, :team_id
   validates_format_of :recipient_email, :with =>/@/
   validates_length_of :recipient_email, :within => 6..100
   validates_uniqueness_of :sender_id, :scope => [:recipient_email, :team_id], :if => lambda { |invitation| !invitation.existed_when_invited.nil? }

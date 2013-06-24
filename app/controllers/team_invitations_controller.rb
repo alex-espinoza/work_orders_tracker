@@ -18,6 +18,7 @@ class TeamInvitationsController < ApplicationController
 				flash[:notice] = "#{@invitation.recipient_email} has been added to your team."
 				redirect_to new_team_team_invitation_path(params[:team_id])
 			else
+				InvitationMailer.new_user_team_invitation(@invitation).deliver
 				flash[:notice] = "Your invitation has been sent to #{@invitation.recipient_email}."
 				redirect_to new_team_team_invitation_path(params[:team_id])
 			end

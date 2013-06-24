@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
   has_many :sent_invitations,
     :foreign_key => "sender_id",
-    :class_name => "Invitation"
+    :class_name => "TeamInvitation"
 
   belongs_to :invitation
 
