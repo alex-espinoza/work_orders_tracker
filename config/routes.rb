@@ -9,7 +9,9 @@ WorkOrdersTracker::Application.routes.draw do
 
   root :to => "teams#index"
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" } do
+    get 'users/sign_up/:invitation_token', :to => "registrations#new_with_token", :as => "new_user_token_registration"
+  end
 
   resources :teams do
     resources :orders

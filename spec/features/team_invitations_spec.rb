@@ -52,7 +52,8 @@ describe "Team Invitations" do
 			fill_in "Email address", with: "user_does_not_exist@test.com"
 			click_button "Invite worker"
 			expect(page).to have_content("Your invitation has been sent")
-			#### test for email sent
+			last_invitation = ActionMailer::Base.deliveries.last
+			expect(last_invitation.body.raw_source).to have_content("asdedededad23")
 			expect(team.team_invitations.all.count).to eq(1)
 		end
 
