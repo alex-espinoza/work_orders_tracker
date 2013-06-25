@@ -3,8 +3,6 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <%= f.hidden_field :invitation_token %>
-
   <div><%= f.label :first_name %><br />
   <%= f.text_field :first_name %></div>
 
@@ -20,9 +18,9 @@
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
+  <%= f.hidden_field :invitation_token, :value => params[:invitation_token] %>
+
   <div><%= f.submit "Sign up" %></div>
 <% end %>
 
 <%= render "devise/shared/links" %>
-
-<%= params %>

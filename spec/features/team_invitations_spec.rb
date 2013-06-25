@@ -112,7 +112,6 @@ describe "Team Invitations" do
 			fill_in "Password", with: "123qwe56"
 			fill_in "Password confirmation", with: "123qwe56"
 			click_button "Sign up"
-			binding.pry
 			expect(page).to have_content("Teams#index")
 			expect(team.team_memberships.all.count).to eq(2)
 			expect(User.all.count).to eq(2)

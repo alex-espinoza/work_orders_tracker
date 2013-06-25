@@ -27,9 +27,9 @@ class User < ActiveRecord::Base
     :class_name => "TeamInvitation"
 
   belongs_to :invitation,
-    class_name: "TeamInvitation"
+    :class_name => "TeamInvitation"
 
-  after_create :add_user_to_team, :unless => Proc.new { self.invitation_id.nil? }
+  after_create :add_user_to_team, :unless => Proc.new { self.invitation.nil? }
 
   validates_presence_of :first_name, :last_name, :email, :password, :password_confirmation
   validates_format_of :email, :with => /@/
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   end
 
   def invitation_token=(token)
-    self[:invitation] = TeamInvitation.find_by_token(token)
+    self.invitation = TeamInvitation.find_by_token(token)
   end
 
 private
