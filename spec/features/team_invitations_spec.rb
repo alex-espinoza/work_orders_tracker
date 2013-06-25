@@ -5,6 +5,7 @@ describe "Team Invitations" do
 	let!(:manager) { FactoryGirl.create(:inviter_manager) }
 	let!(:worker) { FactoryGirl.create(:invited_user) }
 	let!(:manager_membership) { FactoryGirl.create(:invitations_test_membership, role: "manager", user: manager, team: team) }
+	let(:test_invitation) { FactoryGirl.create(:test_invitation, recipient_email: "johndoe@test.com", team: team, sender: manager) }
 	let(:existing_worker_membership) { FactoryGirl.create(:invitations_test_membership, role: "worker", user: worker, team: team) }
 	let(:new_worker) { FactoryGirl.create(:new_user) }
 	let(:new_worker_membership) { FactoryGirl.create(:invitations_test_membership, role: "worker", user: new_worker, team: team) }
@@ -53,7 +54,7 @@ describe "Team Invitations" do
 			click_button "Invite worker"
 			expect(page).to have_content("Your invitation has been sent")
 			last_invitation = ActionMailer::Base.deliveries.last
-			expect(last_invitation.body.raw_source).to have_content("asdedededad23")
+			expect(last_invitation.body.raw_source).to have_content("#{manager.email} has invited you to join")
 			expect(team.team_invitations.all.count).to eq(1)
 		end
 
@@ -98,6 +99,23 @@ describe "Team Invitations" do
 			click_button "Invite worker"
 			expect(page).to have_content("johndoe@test.com is already on your team")
 			expect(team.team_invitations.all.count).to eq(2)
+		end
+	end
+
+	describe "- when an invited user is signing up -" do
+		it "they can create an account if they follow the valid token URL from the invitation email." do
+			test_invitation
+			visit "/users/sign_up/#{test_invitation.token}"
+			fill_in "First name", with: "JustGot"
+			fill_in "Last name", with: "Invited"
+			fill_in "Email address", with: "justgotinvited@test.com"
+			fill_in "Password", with: "123qwe56"
+			fill_in "Password confirmation", with: "123qwe56"
+			click_button "Sign up"
+			expect(page).to have_content("Teams#index")
+			expect(team.team_memberships.all.count).to eq(2)
+			expect(User.all.count).to eq(2)
+			expect(User.find_by_email("justgotinvited@test.com").invitation_token).to eq(test_invitation.token)
 		end
 	end
 end

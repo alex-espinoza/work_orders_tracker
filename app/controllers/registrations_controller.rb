@@ -1,5 +1,9 @@
 class RegistrationsController < Devise::RegistrationsController
+
 	def new_with_token
+		build_resource({})
+		resource.invitation_token = params[:invitation_token]
+    respond_with self.resource
 	end
 
 	def new
@@ -25,5 +29,4 @@ class RegistrationsController < Devise::RegistrationsController
 	def destroy
 		super
 	end
-
 end
