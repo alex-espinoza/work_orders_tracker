@@ -22,5 +22,4 @@ describe User do
 	it { should ensure_length_of(:email).is_at_least(6).is_at_most(100) }
 	it { should ensure_length_of(:first_name).is_at_most(50) }
 	it { should ensure_length_of(:last_name).is_at_most(50) }
-	it
 end

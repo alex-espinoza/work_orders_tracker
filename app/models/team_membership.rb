@@ -16,7 +16,7 @@ class TeamMembership < ActiveRecord::Base
   def create_worker_membership(user)
     team = TeamInvitation.find(user.invitation).team
     team_membership = team.team_memberships.build
-    team_membership.user = resource
+    team_membership.user = user
     team_membership.save
   end
 end
