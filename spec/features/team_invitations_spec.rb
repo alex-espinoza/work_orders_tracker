@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Team Invitations" do
 	let!(:team) { FactoryGirl.create(:invitations_test_team) }
 	let!(:manager) { FactoryGirl.create(:inviter_manager) }
-	let!(:worker) { FactoryGirl.create(:invited_user) }
+	let(:worker) { FactoryGirl.create(:invited_user) }
 	let!(:manager_membership) { FactoryGirl.create(:invitations_test_membership, role: "manager", user: manager, team: team) }
 	let(:test_invitation) { FactoryGirl.create(:test_invitation, recipient_email: "johndoe@test.com", team: team, sender: manager) }
 	let(:existing_worker_membership) { FactoryGirl.create(:invitations_test_membership, role: "worker", user: worker, team: team) }
@@ -112,6 +112,7 @@ describe "Team Invitations" do
 			fill_in "Password", with: "123qwe56"
 			fill_in "Password confirmation", with: "123qwe56"
 			click_button "Sign up"
+			binding.pry
 			expect(page).to have_content("Teams#index")
 			expect(team.team_memberships.all.count).to eq(2)
 			expect(User.all.count).to eq(2)

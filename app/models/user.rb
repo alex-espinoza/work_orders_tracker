@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   ### Add DESTROY dependent associations
 	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :first_name, :last_name, :encrypted_password, :password, :password_confirmation, :remember_me, :skip_invitation, :invitation_id, :invitation_token
+  attr_accessible :email, :first_name, :last_name, :encrypted_password, :password, :password_confirmation,
+    :remember_me, :skip_invitation, :invitation_id, :invitation_token, :invitation
 
   has_many :manager_orders,
     :foreign_key => "manager_id",
@@ -25,7 +26,8 @@ class User < ActiveRecord::Base
     :foreign_key => "sender_id",
     :class_name => "TeamInvitation"
 
-  belongs_to :invitation
+  belongs_to :invitation,
+    class_name: "TeamInvitation"
 
   after_create :add_user_to_team, :unless => Proc.new { self.invitation_id.nil? }
 
@@ -41,7 +43,7 @@ class User < ActiveRecord::Base
   end
 
   def invitation_token=(token)
-    self.invitation_id = TeamInvitation.find_by_token(token)
+    self[:invitation] = TeamInvitation.find_by_token(token)
   end
 
 private
