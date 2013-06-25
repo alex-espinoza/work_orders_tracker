@@ -1,5 +1,5 @@
-<%= @invitation.sender.email %> has invited to join their team on WorkOrdersTracker!
+<%= @invitation.sender.email %> has invited you to join their team on WorkOrdersTracker!
 
 Click on the link below to register your account and get started:
 
-<%= new_user_token_registration_url() %>
+<%= new_user_token_registration_url(@invitation.token) %>

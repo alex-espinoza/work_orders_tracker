@@ -32,4 +32,10 @@ FactoryGirl.define do
 		password "12341234"
 		password_confirmation "12341234"
 	end
+
+	factory :test_invitation, class: TeamInvitation do
+		association :team
+		association :sender
+		recipient_email ""
+	end
 end
