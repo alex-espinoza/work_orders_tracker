@@ -5,11 +5,11 @@ describe TeamInvitation do
 
   it { should belong_to(:team) }
   it { should belong_to(:sender) }
-  # it { should have_one(:recipient) }
+ #  it { should have_one(:recipient) }
 
-  # it { should validate_presence_of(:recipient_email) }
-  # it { should validate_presence_of(:sender_id) }
-  # it { should validate_presence_of(:team_id) }
+ #  it { should validate_presence_of(:recipient_email) }
+ #  it { should validate_presence_of(:sender_id) }
+ #  it { should validate_presence_of(:team_id) }
 
 	# it { should validate_presence_of(:recipient_email) }
 	# it { should_not allow_value("blah").for(:recipient_email) }

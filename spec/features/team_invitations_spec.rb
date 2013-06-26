@@ -10,6 +10,15 @@ describe "Team Invitations" do
 	let(:new_worker) { FactoryGirl.create(:new_user) }
 	let(:new_worker_membership) { FactoryGirl.create(:invitations_test_membership, role: "worker", user: new_worker, team: team) }
 
+	def test_invitation_sign_up
+		fill_in "First name", with: "JustGot"
+		fill_in "Last name", with: "Invited"
+		fill_in "Email address", with: "justgotinvited@test.com"
+		fill_in "Password", with: "123qwe56"
+		fill_in "Password confirmation", with: "123qwe56"
+		click_button "Sign up"
+	end
+
 	describe "- when inviting a user to a team -" do
 		it "only a team manager should be able to invite users." do
 			sign_in_as(manager)
@@ -106,6 +115,19 @@ describe "Team Invitations" do
 		it "they can create an account if they follow the valid token URL from the invitation email." do
 			test_invitation
 			visit "/users/sign_up/#{test_invitation.token}"
+			test_invitation_sign_up
+			expect(page).to have_content("Teams#index")
+			expect(team.team_memberships.all.count).to eq(2)
+			expect(User.all.count).to eq(2)
+			expect(User.find_by_email("justgotinvited@test.com").invitation_token).to eq(test_invitation.token)
+		end
+	end
+
+	describe "- when trying to sign up with a fake/invalid token -" do
+
+		it "they can create an account, but they won't be auto-added to a team." do
+			test_invitation
+			visit "/users/sign_up/andn827hdbs123boguskey"
 			fill_in "First name", with: "JustGot"
 			fill_in "Last name", with: "Invited"
 			fill_in "Email address", with: "justgotinvited@test.com"
@@ -113,9 +135,20 @@ describe "Team Invitations" do
 			fill_in "Password confirmation", with: "123qwe56"
 			click_button "Sign up"
 			expect(page).to have_content("Teams#index")
-			expect(team.team_memberships.all.count).to eq(2)
+			expect(team.team_memberships.all.count).to eq(1)
 			expect(User.all.count).to eq(2)
-			expect(User.find_by_email("justgotinvited@test.com").invitation_token).to eq(test_invitation.token)
+			expect(User.find_by_email("justgotinvited@test.com").invitation_token).to_not eq(test_invitation.token)
+			expect(User.find_by_email("justgotinvited@test.com").invitation).to be_nil
+		end
+
+		it "they cannot create an account if the token has already been used by another user." do
+			test_invitation
+			visit "/users/sign_up/#{test_invitation.token}"
+			test_invitation_sign_up
+			click_link "Sign Out"
+			visit "/users/sign_up/#{test_invitation.token}"
+			test_invitation_sign_up
+			expect(page).to have_content("Invitation token has already been used")
 		end
 	end
 end
