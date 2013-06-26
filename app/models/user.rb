@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
   attr_accessible :email, :first_name, :last_name, :encrypted_password, :password, :password_confirmation,
-    :remember_me, :skip_invitation, :invitation_id, :invitation_token, :invitation
+    :remember_me, :skip_invitation, :invitation_id, :invitation_token
 
   has_many :manager_orders,
     :foreign_key => "manager_id",
@@ -37,6 +37,18 @@ class User < ActiveRecord::Base
   validates_length_of :email, :within => 6..100 # a@a.co
   validates_length_of :first_name, :maximum => 50
   validates_length_of :last_name, :maximum => 50
+  validate :if_token_already_used
+
+  def if_token_already_used
+    errors.add :invitation_token, "has already been used." if check_if_token_already_used
+  end
+
+  def check_if_token_already_used
+    if TeamInvitation.find_by_token(invitation_token)
+      existing_token = TeamInvitation.find_by_token(invitation_token)
+      User.find_by_invitation_id(existing_token)
+    end
+  end
 
   def invitation_token
     invitation.token if invitation
