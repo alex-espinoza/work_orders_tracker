@@ -3,3 +3,15 @@
 <p><%= link_to "Add worker to team", new_team_team_invitation_path(@team) %></p>
 
 <p><%= link_to "Create work order", new_team_order_path(@team) %></p>
+
+<h3>Work Orders</h3>
+	<table>
+		<tr>
+			<td>Name</td>
+		</tr>
+		<% @team.orders.each do |order| %>
+		<tr>
+			<td><%= link_to order.name, team_order_path(@team, order) %></td>
+		</tr>
+		<% end %>
+	</table>

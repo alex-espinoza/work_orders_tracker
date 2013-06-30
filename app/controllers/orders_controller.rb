@@ -9,6 +9,20 @@ class OrdersController < ApplicationController
   	@order = Order.new
   end
 
+  def create
+  	@order = Order.new(params[:order])
+		@order.manager = current_user
+		@order.team = @team
+
+		if @order.save
+			@order.assign_order_to_user(@team, params[:order][:worker_id])
+			flash[:notice] = "Work order has been created and was assigned to #{@order.worker.get_full_name}."
+			redirect_to team_path(@team)
+		else
+			render action: "new"
+		end
+  end
+
 private
 
 	def load_team
