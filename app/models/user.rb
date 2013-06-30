@@ -58,6 +58,10 @@ class User < ActiveRecord::Base
     self.invitation = TeamInvitation.find_by_token(token)
   end
 
+  def get_full_name
+    "#{first_name} #{last_name}"
+  end
+
 private
 
   def add_user_to_team
