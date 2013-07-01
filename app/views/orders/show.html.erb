@@ -1,0 +1,7 @@
+<h1><%= @order.name %></h1>
+
+<p>Description: <%= @order.description %></p>
+
+<p><%= link_to "Edit work order", edit_team_order_path(@team, @order) %></p>
+
+<p><%= link_to "Back", team_order_path(@team, @order) %></p>

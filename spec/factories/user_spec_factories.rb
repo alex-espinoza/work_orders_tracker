@@ -20,6 +20,6 @@ FactoryGirl.define do
 		description "Left wall in room 146 is chipping paint badly. Repaint when clients are out after 2 PM."
 		association :team
 		association :manager
-		# select("#{worker.first_name} #{worker.last_name}", :from => "Assign work order to")
+		association :worker
 	end
 end

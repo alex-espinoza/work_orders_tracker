@@ -1,0 +1,29 @@
+<%= form_for [@team, @order] do |f| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this work order from being created:</h2>
+
+      <ul>
+      <% @order.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<div><%= f.label :name, "Work order name" %><br />
+	<%= f.text_field :name %></div>
+
+	<div><%= f.label :description %><br />
+	<%= f.text_area :description, :size => "40x10" %></div>
+
+	<div><%= f.label :worker_id, "Assign work order to" %><br />
+	<%= f.select :worker_id, @team.team_memberships.map {|member| ["#{member.user.get_full_name} - #{member.user.email}"]}, include_blank: true %></div>
+
+  <div><%= f.file_field :file_attachment %></div>
+
+  <div><%= f.check_box :high_priority %>
+  <%= f.label :high_priority, "Mark this work order as high priority" %></div>
+
+	<div><%= f.submit "Create work order" %></div>
+<% end %>
