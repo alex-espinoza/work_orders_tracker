@@ -17,7 +17,8 @@ class Order < ActiveRecord::Base
   belongs_to :team
 
   validates_presence_of :description, :name, :status, :team_id, :manager_id, :worker_id
-  validates_length_of :name, :maximum => 140
+  validates_length_of :name, :minimum => 4, :maximum => 140
+  validates_length_of :description, :minimum => 4, :maximum => 800
 
   state_machine :status, :initial => :assigned do
     event :complete do

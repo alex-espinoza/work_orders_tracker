@@ -8,6 +8,21 @@ describe "Orders" do
 		let!(:manager_membership) { FactoryGirl.create(:invitations_test_membership, role: "manager", user: manager, team: team) }
 		let!(:worker_membership) { FactoryGirl.create(:invitations_test_membership, role: "worker", user: worker, team: team) }
 		let(:valid_work_order) { FactoryGirl.create(:work_order, team: team, manager: manager, worker: worker) }
+		let(:team_worker_1) { FactoryGirl.create(:team_of_workers) }
+		let(:team_worker_2) { FactoryGirl.create(:team_of_workers) }
+		let(:team_worker_3) { FactoryGirl.create(:team_of_workers) }
+		let(:orders_for_worker_1) { 3.times {FactoryGirl.create(:many_work_orders, team: team, manager: manager, worker: team_worker_1)} }
+		let(:orders_for_worker_2) { 3.times {FactoryGirl.create(:many_work_orders, team: team, manager: manager, worker: team_worker_2)} }
+		let(:orders_for_worker_3) { 3.times {FactoryGirl.create(:many_work_orders, team: team, manager: manager, worker: team_worker_3)} }
+		let(:create_worker_team_and_orders) do
+			team_worker_1
+			team_worker_2
+			team_worker_3
+			orders_for_worker_1
+			orders_for_worker_2
+			orders_for_worker_3
+		end
+		let(:completed_work_order) { FactoryGirl.create(:completed_work_order, team: team, manager: manager, worker: worker) }
 
 		it "can create and assign a work order if all fields are valid." do
 			sign_in_as(manager)
@@ -58,24 +73,102 @@ describe "Orders" do
 			fill_in "Description", :with => "Left wall in room 146 is chipping paint badly. Sand away and repaint when clients are out after 2 PM."
 			click_button "Save changes"
 			expect(page).to have_content("Work order has been successfully updated.")
+			expect(team.orders.all.first.name).to eq("Wall needs to be sanded and painted")
+			expect(team.orders.all.first.description).to eq("Left wall in room 146 is chipping paint badly. Sand away and repaint when clients are out after 2 PM.")
 		end
 
 		it "can edit an existing work order but changes will not be saved if any fields are invalid." do
+			valid_work_order
+			sign_in_as(manager)
+			click_link "Test Maintenance Team"
+			click_link "Wall needs to be repainted"
+			click_link "Edit work order"
+			fill_in "Work order name", :with => "asd"
+			fill_in "Description", :with => "asd"
+			click_button "Save changes"
+			expect(page).to have_content("errors prohibited this work order from being updated")
+		end
+
+		it "can assign a work order to themself." do
+			sign_in_as(manager)
+			click_link "Test Maintenance Team"
+			click_link "Create work order"
+			fill_in "Work order name", :with => "Wall needs to be repainted"
+			fill_in "Description", :with => "Left wall in room 146 is chipping paint badly. Repaint when clients are out after 2 PM."
+			select("#{manager.get_full_name}", :from => "Assign work order to")
+			click_button "Create work order"
+			expect(page).to have_content("Work order has been created and was assigned to #{manager.get_full_name}.")
+			expect(team.orders.all.count).to eq(1)
+			expect(manager.manager_orders.all.count).to eq(1)
+			expect(manager.worker_orders.all.count).to eq(1)
+		end
+
+		it "can change who a work order is assigned to." do
+			valid_work_order
+			sign_in_as(manager)
+			click_link "Test Maintenance Team"
+			click_link "Wall needs to be repainted"
+			click_link "Edit work order"
+			select("#{manager.get_full_name}", :from => "Assign work order to")
+			click_button "Save changes"
+			expect(page).to have_content("Work order has been successfully updated.")
+			expect(manager.manager_orders.all.count).to eq(1)
+			expect(manager.worker_orders.all.count).to eq(1)
 		end
 
 		it "can view the status of all of the team's work orders on the team show page." do
+			create_worker_team_and_orders
+			sign_in_as(manager)
+			click_link "Test Maintenance Team"
+			save_and_open_page
+			expect(page).to have_content("Floor 1 conference rooms need to be cleaned")
+			expect(page).to have_content("Floor 2 conference rooms need to be cleaned")
+			expect(page).to have_content("Floor 3 conference rooms need to be cleaned")
+			expect(page).to have_content("Floor 4 conference rooms need to be cleaned")
+			expect(page).to have_content("Floor 5 conference rooms need to be cleaned")
+			expect(page).to have_content("Floor 6 conference rooms need to be cleaned")
+			expect(page).to have_content("Floor 7 conference rooms need to be cleaned")
+			expect(page).to have_content("Floor 8 conference rooms need to be cleaned")
+			expect(page).to have_content("Floor 9 conference rooms need to be cleaned")
+			expect(page).to have_content("Assigned")
 		end
 
-		it "can re-assign work orders regardless of their status." do
-			# make test for every status
+		it "can re-assign work orders only if they are completed." do
+			completed_work_order
+			sign_in_as(manager)
+			click_link "Test Maintenance Team"
+			click_link "Replace spotlight lightbulb"
+			click_link "Reassign"
+			expect(page).to have_content("Work order has been reassigned.")
+			expect(page).to_not have_link("Reassign")
+			expect(page).to have_content("Assigned")
+			expect(team.orders.first.status).to eq("assigned")
 		end
 
-		it "can close work orders regardless of their status." do
-			#make test for every status
+		it "can close work orders if they are completed." do
+			completed_work_order
+			sign_in_as(manager)
+			click_link "Test Maintenance Team"
+			click_link "Replace spotlight lightbulb"
+			click_link "Close"
+			expect(page).to have_content("Work order has been closed.")
+			expect(page).to_not have_link("Reassign")
+			expect(page).to_not have_link("Close")
+			expect(page).to have_content("Closed")
+			expect(team.orders.first.status).to eq("closed")
 		end
 
-		it "can respond to work orders regardless of their status." do
-			#make test for every status
+		it "can close work orders if they are assigned." do
+			valid_work_order
+			sign_in_as(manager)
+			click_link "Test Maintenance Team"
+			click_link "Wall needs to be repainted"
+			click_link "Close"
+			expect(page).to have_content("Work order has been closed.")
+			expect(page).to_not have_link("Reassign")
+			expect(page).to_not have_link("Close")
+			expect(page).to have_content("Closed")
+			expect(team.orders.first.status).to eq("closed")
 		end
 	end
 
@@ -83,7 +176,7 @@ describe "Orders" do
 		it "cannot create a work order." do
 		end
 
-		it "can only view the status of work orders assigned to them." do
+		it "can only view work orders assigned to them." do
 		end
 
 		it "can respond to work orders." do
@@ -93,9 +186,6 @@ describe "Orders" do
 		end
 
 		it "cannot change the high priority status of a work order." do
-		end
-
-		it "cannot respond to work orders that have a completed status." do
 		end
 	end
 
