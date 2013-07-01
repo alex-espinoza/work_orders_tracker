@@ -23,6 +23,24 @@ class OrdersController < ApplicationController
 		end
   end
 
+  def show
+  	@order = Order.find(params[:id])
+  end
+
+  def edit
+  	@order = Order.find(params[:id])
+  end
+
+	def update
+		@order = Order.find(params[:id])
+
+		if @order.update_attributes(params[:order])
+			redirect_to team_order_path(@team, @order), notice: "Work order has been successfully updated."
+		else
+			render action: "edit"
+		end
+	end
+
 private
 
 	def load_team
