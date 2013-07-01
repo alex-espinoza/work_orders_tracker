@@ -11,7 +11,7 @@
 		</tr>
 		<% @team.orders.each do |order| %>
 		<tr>
-			<td><%= link_to order.name, team_order_path(@team, order) %></td>
+			<td><%= link_to order.name, team_order_path(@team, order) %> | <%= order.status.capitalize %></td>
 		</tr>
 		<% end %>
 	</table>

@@ -35,9 +35,33 @@ class OrdersController < ApplicationController
 		@order = Order.find(params[:id])
 
 		if @order.update_attributes(params[:order])
+			@order.assign_order_to_user(@team, params[:order][:worker_id])
 			redirect_to team_order_path(@team, @order), notice: "Work order has been successfully updated."
 		else
+			@order.assign_order_to_user(@team, params[:order][:worker_id])
 			render action: "edit"
+		end
+	end
+
+	def reassign
+		@order = Order.find(params[:order_id])
+
+		if @order.completed?
+			@order.reassign
+			redirect_to team_order_path(@team, @order), notice: "Work order has been reassigned."
+		else
+			render action: "show"
+		end
+	end
+
+	def close
+		@order = Order.find(params[:order_id])
+
+		if @order.completed? || @order.assigned?
+			@order.close
+			redirect_to team_order_path(@team, @order), notice: "Work order has been closed."
+		else
+			render action: "show"
 		end
 	end
 

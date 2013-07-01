@@ -1,7 +1,19 @@
 <h1><%= @order.name %></h1>
 
+<p>Current status of this work order: <%= @order.status.capitalize %></p>
+
 <p>Description: <%= @order.description %></p>
 
-<p><%= link_to "Edit work order", edit_team_order_path(@team, @order) %></p>
+<% if @order.completed? %>
+	<p><%= link_to "Reassign", team_order_reassign_path(@team, @order), :method => :put %></p>
+<% end %>
 
-<p><%= link_to "Back", team_order_path(@team, @order) %></p>
+<% if @order.completed? || @order.assigned? %>
+	<p><%= link_to "Close", team_order_close_path(@team, @order), :method => :put %></p>
+<% end %>
+
+<% unless @order.closed? %>
+	<p><%= link_to "Edit work order", edit_team_order_path(@team, @order) %></p>
+<% end %>
+
+<p><%= link_to "Back", team_path(@team) %></p>
