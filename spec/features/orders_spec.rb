@@ -1,13 +1,14 @@
 require 'spec_helper'
 
 describe "Orders" do
+	let!(:manager) { FactoryGirl.create(:valid_manager) }
+	let!(:worker) { FactoryGirl.create(:new_user) }
+	let!(:team) { FactoryGirl.create(:invitations_test_team) }
+	let!(:manager_membership) { FactoryGirl.create(:invitations_test_membership, role: "manager", user: manager, team: team) }
+	let!(:worker_membership) { FactoryGirl.create(:invitations_test_membership, role: "worker", user: worker, team: team) }
+	let(:valid_work_order) { FactoryGirl.create(:work_order, team: team, manager: manager, worker: worker) }
+
 	describe "- a manager -" do
-		let!(:manager) { FactoryGirl.create(:valid_manager) }
-		let!(:worker) { FactoryGirl.create(:new_user) }
-		let!(:team) { FactoryGirl.create(:invitations_test_team) }
-		let!(:manager_membership) { FactoryGirl.create(:invitations_test_membership, role: "manager", user: manager, team: team) }
-		let!(:worker_membership) { FactoryGirl.create(:invitations_test_membership, role: "worker", user: worker, team: team) }
-		let(:valid_work_order) { FactoryGirl.create(:work_order, team: team, manager: manager, worker: worker) }
 		let(:team_worker_1) { FactoryGirl.create(:team_of_workers) }
 		let(:team_worker_2) { FactoryGirl.create(:team_of_workers) }
 		let(:team_worker_3) { FactoryGirl.create(:team_of_workers) }
@@ -120,7 +121,6 @@ describe "Orders" do
 			create_worker_team_and_orders
 			sign_in_as(manager)
 			click_link "Test Maintenance Team"
-			save_and_open_page
 			expect(page).to have_content("Floor 1 conference rooms need to be cleaned")
 			expect(page).to have_content("Floor 2 conference rooms need to be cleaned")
 			expect(page).to have_content("Floor 3 conference rooms need to be cleaned")
@@ -174,6 +174,9 @@ describe "Orders" do
 
 	describe "- a worker -" do
 		it "cannot create a work order." do
+			sign_in_as(worker)
+			click_link "Test Maintenance Team"
+			expect(page).to_not have_content("Create work order")
 		end
 
 		it "can only view work orders assigned to them." do
