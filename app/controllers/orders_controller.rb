@@ -1,9 +1,7 @@
 class OrdersController < ApplicationController
+	load_and_authorize_resource
 	before_filter :authenticate_user!
 	before_filter :load_team
-
-  def index
-  end
 
   def new
   	@order = Order.new

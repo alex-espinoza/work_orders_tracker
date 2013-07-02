@@ -2,7 +2,9 @@
 
 <p><%= link_to "Add worker to team", new_team_team_invitation_path(@team) %></p>
 
-<p><%= link_to "Create work order", new_team_order_path(@team) %></p>
+<% if can? :new, Order %>
+	<p><%= link_to "Create work order", new_team_order_path(@team) %></p>
+<% end %>
 
 <h3>Work Orders</h3>
 	<table>
@@ -15,3 +17,5 @@
 		</tr>
 		<% end %>
 	</table>
+
+	<p><%= link_to "Back", teams_path %></p>

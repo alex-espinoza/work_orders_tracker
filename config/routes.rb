@@ -8,16 +8,14 @@ WorkOrdersTracker::Application.routes.draw do
   end
 
   resources :teams do
-    resources :orders do
+    resources :orders, :except => [:index] do
       put "/reassign", :to => "orders#reassign", :as => :reassign
       put "/close", :to => "orders#close", :as => :close
     end
     resources :team_invitations, :only => [:new, :create]
   end
 
-  resources :orders do
+  resources :orders, :except => [:index, :new, :create, :edit, :show, :update, :destroy] do
     resources :order_responses
   end
-
-  resources :users
 end
