@@ -47,4 +47,13 @@ FactoryGirl.define do
 		association :manager
 		association :worker
 	end
+
+	factory :closed_work_order, class: Order do
+		name "Shrubs need to be trimmed"
+		description "Shrubs by front door need to be trimmed by 12PM in time for guest arrival."
+		status "closed"
+		association :team
+		association :manager
+		association :worker
+	end
 end

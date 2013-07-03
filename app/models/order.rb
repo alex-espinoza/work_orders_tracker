@@ -40,4 +40,8 @@ class Order < ActiveRecord::Base
     self.worker = team.team_memberships.find_by_user_id(worker_id).user
     self.save
   end
+
+  def assigned_to?(user)
+    manager_id == user.id || worker_id == user.id
+  end
 end

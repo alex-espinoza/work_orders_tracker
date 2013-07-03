@@ -63,6 +63,17 @@ class OrdersController < ApplicationController
 		end
 	end
 
+	def complete
+		@order = Order.find(params[:order_id])
+
+		if @order.assigned?
+			@order.complete
+			redirect_to team_order_path(@team, @order), notice: "Work order has been completed."
+		else
+			render action: "show"
+		end
+	end
+
 private
 
 	def load_team

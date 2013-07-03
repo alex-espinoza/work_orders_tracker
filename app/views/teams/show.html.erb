@@ -1,20 +1,21 @@
 <h1>Teams#show</h1>
 
-<p><%= link_to "Add worker to team", new_team_team_invitation_path(@team) %></p>
+<% if @team.managed_by?(current_user) %>
+	<p><%= link_to "Add worker to team", new_team_team_invitation_path(@team) %></p>
+<% end %>
 
-<% if can? :new, Order %>
+<% if @team.managed_by?(current_user) %>
 	<p><%= link_to "Create work order", new_team_order_path(@team) %></p>
 <% end %>
 
 <h3>Work Orders</h3>
 	<table>
-		<tr>
-			<td>Name</td>
-		</tr>
 		<% @team.orders.each do |order| %>
-		<tr>
-			<td><%= link_to order.name, team_order_path(@team, order) %> | <%= order.status.capitalize %></td>
-		</tr>
+			<% if order.assigned_to?(current_user) %>
+			<tr>
+					<td><%= link_to order.name, team_order_path(@team, order) %> | <%= order.status.capitalize %></td>
+			</tr>
+			<% end %>
 		<% end %>
 	</table>
 

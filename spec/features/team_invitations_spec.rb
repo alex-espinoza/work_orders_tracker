@@ -22,14 +22,15 @@ describe "Team Invitations" do
 	describe "- when inviting a user to a team -" do
 		it "only a team manager should be able to invite users." do
 			sign_in_as(manager)
-			visit team_path(team)
-			expect(page).to have_content("Add worker to team")
+			click_link "Test Maintenance Team"
+			expect(page).to have_link("Add worker to team")
 		end
 
 		it "a worker cannot invite users to a team." do
+			existing_worker_membership
 			sign_in_as(worker)
-			visit team_path(team)
-			expect(page).to_not have_content("Add worker to team")
+			click_link "Test Maintenance Team"
+			expect(page).to_not have_link("Add worker to team")
 		end
 
 		it "a valid email address must be input." do

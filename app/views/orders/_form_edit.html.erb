@@ -18,7 +18,7 @@
 	<%= f.text_area :description, :size => "40x10" %></div>
 
 	<div><%= f.label :worker_id, "Assign work order to" %><br />
-	<%= f.select :worker_id, options_for_select(@team.team_memberships.map {|member| ["#{member.user.get_full_name} - #{member.user.email}"]}), :selected => "#{@order.worker.get_full_name} - #{@order.worker.email}" %></div>
+	<%= f.select :worker_id, options_for_select(@team.team_memberships.map {|member| ["#{member.user.get_full_name} - #{member.user.email}"]}, "#{@order.worker.get_full_name} - #{@order.worker.email}") %></div>
 
   <div><%= f.file_field :file_attachment %></div>
 

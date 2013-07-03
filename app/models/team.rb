@@ -15,4 +15,8 @@ class Team < ActiveRecord::Base
 
   validates_presence_of :team_name
   validates_length_of :team_name, :maximum => 100
+
+  def managed_by?(user)
+    team_memberships.where(user_id: user.id, role: "manager").present?
+  end
 end

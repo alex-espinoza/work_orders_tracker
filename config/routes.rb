@@ -11,6 +11,7 @@ WorkOrdersTracker::Application.routes.draw do
     resources :orders, :except => [:index] do
       put "/reassign", :to => "orders#reassign", :as => :reassign
       put "/close", :to => "orders#close", :as => :close
+      put "/complete", :to => "orders#complete", :as => :complete
     end
     resources :team_invitations, :only => [:new, :create]
   end
