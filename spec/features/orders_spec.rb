@@ -7,23 +7,24 @@ describe "Orders" do
 	let!(:manager_membership) { FactoryGirl.create(:invitations_test_membership, role: "manager", user: manager, team: team) }
 	let!(:worker_membership) { FactoryGirl.create(:invitations_test_membership, role: "worker", user: worker, team: team) }
 	let(:valid_work_order) { FactoryGirl.create(:work_order, team: team, manager: manager, worker: worker) }
+	let(:team_worker_1) { FactoryGirl.create(:team_of_workers) }
+	let(:team_worker_2) { FactoryGirl.create(:team_of_workers) }
+	let(:team_worker_3) { FactoryGirl.create(:team_of_workers) }
+	let(:orders_for_worker_1) { 3.times {FactoryGirl.create(:many_work_orders, team: team, manager: manager, worker: team_worker_1)} }
+	let(:orders_for_worker_2) { 3.times {FactoryGirl.create(:many_work_orders, team: team, manager: manager, worker: team_worker_2)} }
+	let(:orders_for_worker_3) { 3.times {FactoryGirl.create(:many_work_orders, team: team, manager: manager, worker: team_worker_3)} }
+	let(:create_worker_team_and_orders) do
+		team_worker_1
+		team_worker_2
+		team_worker_3
+		orders_for_worker_1
+		orders_for_worker_2
+		orders_for_worker_3
+	end
 
 	describe "- a manager -" do
-		let(:team_worker_1) { FactoryGirl.create(:team_of_workers) }
-		let(:team_worker_2) { FactoryGirl.create(:team_of_workers) }
-		let(:team_worker_3) { FactoryGirl.create(:team_of_workers) }
-		let(:orders_for_worker_1) { 3.times {FactoryGirl.create(:many_work_orders, team: team, manager: manager, worker: team_worker_1)} }
-		let(:orders_for_worker_2) { 3.times {FactoryGirl.create(:many_work_orders, team: team, manager: manager, worker: team_worker_2)} }
-		let(:orders_for_worker_3) { 3.times {FactoryGirl.create(:many_work_orders, team: team, manager: manager, worker: team_worker_3)} }
-		let(:create_worker_team_and_orders) do
-			team_worker_1
-			team_worker_2
-			team_worker_3
-			orders_for_worker_1
-			orders_for_worker_2
-			orders_for_worker_3
-		end
 		let(:completed_work_order) { FactoryGirl.create(:completed_work_order, team: team, manager: manager, worker: worker) }
+		let(:closed_work_order) { FactoryGirl.create(:closed_work_order, team: team, manager: manager, worker: worker) }
 
 		it "can create and assign a work order if all fields are valid." do
 			sign_in_as(manager)
@@ -115,6 +116,7 @@ describe "Orders" do
 			expect(page).to have_content("Work order has been successfully updated.")
 			expect(manager.manager_orders.all.count).to eq(1)
 			expect(manager.worker_orders.all.count).to eq(1)
+			expect(worker.worker_orders.all.count).to eq(0)
 		end
 
 		it "can view the status of all of the team's work orders on the team show page." do
@@ -145,6 +147,22 @@ describe "Orders" do
 			expect(team.orders.first.status).to eq("assigned")
 		end
 
+		it "cannot re-assign work orders if they are not completed." do
+			valid_work_order
+			closed_work_order
+			sign_in_as(manager)
+			click_link "Test Maintenance Team"
+			click_link "Wall needs to be repainted"
+			expect(page).to_not have_link("Reassign")
+			expect(page).to have_content("Assigned")
+			expect(team.orders.find_by_id(valid_work_order).status).to eq("assigned")
+			click_link "Back"
+			click_link "Shrubs need to be trimmed"
+			expect(page).to_not have_link("Reassign")
+			expect(page).to have_content("Closed")
+			expect(team.orders.find_by_id(closed_work_order).status).to eq("closed")
+		end
+
 		it "can close work orders if they are completed." do
 			completed_work_order
 			sign_in_as(manager)
@@ -170,6 +188,19 @@ describe "Orders" do
 			expect(page).to have_content("Closed")
 			expect(team.orders.first.status).to eq("closed")
 		end
+
+		it "can complete work orders if they are assigned." do
+			valid_work_order
+			sign_in_as(manager)
+			click_link "Test Maintenance Team"
+			click_link "Wall needs to be repainted"
+			click_link "Complete"
+			expect(page).to have_content("Work order has been completed.")
+			expect(page).to have_link("Reassign")
+			expect(page).to have_link("Close")
+			expect(page).to have_content("Completed")
+			expect(team.orders.first.status).to eq("completed")
+		end
 	end
 
 	describe "- a worker -" do
@@ -180,18 +211,40 @@ describe "Orders" do
 		end
 
 		it "can only view work orders assigned to them." do
-		end
-
-		it "can respond to work orders." do
+			create_worker_team_and_orders
+			sign_in_as(worker)
+			click_link "Test Maintenance Team"
+			expect(page).to_not have_content("conference rooms need to be cleaned")
 		end
 
 		it "can only change the status of a work order to completed." do
+			valid_work_order
+			sign_in_as(worker)
+			click_link "Test Maintenance Team"
+			click_link "Wall needs to be repainted"
+			expect(page).to have_link("Complete")
+			expect(page).to_not have_link("Reassign")
+			expect(page).to_not have_link("Close")
+			click_link "Complete"
+			expect(page).to have_content("Work order has been completed.")
+			expect(page).to have_content("Complete")
+			expect(team.orders.first.status).to eq("completed")
 		end
 
-		it "cannot change the high priority status of a work order." do
+		it "cannot edit a work order." do
+			valid_work_order
+			sign_in_as(worker)
+			click_link "Test Maintenance Team"
+			click_link "Wall needs to be repainted"
+			expect(page).to_not have_link("Edit work order")
 		end
 	end
 
 	it "clicking on an work order's name will bring you to that order's page." do
+		valid_work_order
+		sign_in_as(worker)
+		click_link "Test Maintenance Team"
+		click_link "Wall needs to be repainted"
+		expect(page).to have_content("Wall needs to be repainted")
 	end
 end

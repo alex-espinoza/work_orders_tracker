@@ -17,7 +17,7 @@ class Ability
       user.team_memberships.where(team_id: team, role: "manager").length > 0
     end
 
-    can [:new, :create, :edit, :update, :reassign, :close], Order do |order|
+    can [:new, :create, :edit, :update, :reassign, :close, :complete], Order do |order|
       team = params[:team_id]
       user.team_memberships.where(team_id: team, role: "manager").length > 0
     end

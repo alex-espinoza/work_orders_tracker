@@ -4,15 +4,19 @@
 
 <p>Description: <%= @order.description %></p>
 
-<% if @order.completed? %>
+<% if @order.assigned? %>
+	<p><%= link_to "Complete", team_order_complete_path(@team, @order), :method => :put %></p>
+<% end %>
+
+<% if @order.completed? && @team.managed_by?(current_user) %>
 	<p><%= link_to "Reassign", team_order_reassign_path(@team, @order), :method => :put %></p>
 <% end %>
 
-<% if @order.completed? || @order.assigned? %>
+<% if (@order.completed? || @order.assigned?) && @team.managed_by?(current_user) %>
 	<p><%= link_to "Close", team_order_close_path(@team, @order), :method => :put %></p>
 <% end %>
 
-<% unless @order.closed? %>
+<% if !@order.closed? && @team.managed_by?(current_user) %>
 	<p><%= link_to "Edit work order", edit_team_order_path(@team, @order) %></p>
 <% end %>
 
