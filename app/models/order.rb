@@ -16,7 +16,12 @@ class Order < ActiveRecord::Base
 
   belongs_to :team
 
-  validates_presence_of :description, :name, :status, :team_id, :manager_id, :worker_id
+  validates_presence_of :description
+  validates_presence_of :name
+  validates_presence_of :status
+  validates_presence_of :team_id
+  validates_presence_of :manager_id
+  validates_presence_of :worker_id
   validates_length_of :name, :minimum => 4, :maximum => 140
   validates_length_of :description, :minimum => 4, :maximum => 800
 
@@ -44,4 +49,5 @@ class Order < ActiveRecord::Base
   def assigned_to?(user)
     manager_id == user.id || worker_id == user.id
   end
+
 end

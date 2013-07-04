@@ -25,5 +25,10 @@ class Ability
     can [:show], Order do |order|
       user.id == order.worker.id || user.id == order.manager.id
     end
+
+    can [:create], OrderResponse do |response|
+      order = Order.find(params[:order_id])
+      user.id == order.worker.id || user.id == order.manager.id
+    end
   end
 end

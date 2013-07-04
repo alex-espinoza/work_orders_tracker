@@ -4,6 +4,23 @@
 
 <p>Description: <%= @order.description %></p>
 
+<%= image_tag @order.file_attachment_url(:square), class: "thumbnail-size-image" if @order.file_attachment? %>
+
+<%= image_tag @order.file_attachment_url, class: "full-size-image" if @order.file_attachment? %>
+
+<h3>Responses</h3>
+	<table>
+		<% @order.order_responses.each do |response| %>
+		<tr>
+			<td><%= "#{response.user.get_full_name} responded: #{response.response}" %></td>
+		</tr>
+		<% end %>
+	</table>
+
+<% unless @order.closed? %>
+	<%= render 'order_responses/form' %>
+<% end %>
+
 <% if @order.assigned? %>
 	<p><%= link_to "Complete", team_order_complete_path(@team, @order), :method => :put %></p>
 <% end %>

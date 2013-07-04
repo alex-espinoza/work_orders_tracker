@@ -7,8 +7,8 @@ WorkOrdersTracker::Application.routes.draw do
     get "users/sign_up/:invitation_token", :to => "registrations#new_with_token", :as => :new_user_token_registration
   end
 
-  resources :teams do
-    resources :orders, :except => [:index] do
+  resources :teams, :except => [:edit, :update, :destroy] do
+    resources :orders, :except => [:index, :destroy] do
       put "/reassign", :to => "orders#reassign", :as => :reassign
       put "/close", :to => "orders#close", :as => :close
       put "/complete", :to => "orders#complete", :as => :complete
@@ -17,6 +17,6 @@ WorkOrdersTracker::Application.routes.draw do
   end
 
   resources :orders, :except => [:index, :new, :create, :edit, :show, :update, :destroy] do
-    resources :order_responses
+    resources :order_responses, :only => [:create]
   end
 end

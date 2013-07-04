@@ -31,7 +31,11 @@ class User < ActiveRecord::Base
 
   after_create :add_user_to_team, :unless => Proc.new { self.invitation.nil? }
 
-  validates_presence_of :first_name, :last_name, :email, :password, :password_confirmation
+  validates_presence_of :first_name
+  validates_presence_of :last_name
+  validates_presence_of :email
+  validates_presence_of :password
+  validates_presence_of :password_confirmation
   validates_format_of :email, :with => /@/
   validates_uniqueness_of :email, :case_sensitive => false
   validates_length_of :email, :within => 6..100 # a@a.co
