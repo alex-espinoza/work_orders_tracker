@@ -4,7 +4,9 @@ class TeamMembership < ActiveRecord::Base
   belongs_to :user
   belongs_to :team
 
-  validates_presence_of :role, :user_id, :team_id
+  validates_presence_of :role
+  validates_presence_of :user_id
+  validates_presence_of :team_id
 
   def create_manager_membership(user, team)
     team_membership = team.team_memberships.build

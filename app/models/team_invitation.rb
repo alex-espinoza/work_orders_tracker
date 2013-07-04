@@ -4,7 +4,9 @@ class TeamInvitation < ActiveRecord::Base
 	belongs_to :team, inverse_of: :team_invitations
   belongs_to :sender, :class_name => "User"
 
-  validates_presence_of :recipient_email, :sender_id, :team_id
+  validates_presence_of :recipient_email
+  validates_presence_of :sender_id
+  validates_presence_of :team_id
   validates_format_of :recipient_email, :with =>/@/
   validates_length_of :recipient_email, :within => 6..100
   validates_uniqueness_of :sender_id, :scope => [:recipient_email, :team_id], :unless => lambda { |invitation| invitation.existed_when_invited.nil? }
@@ -12,21 +14,6 @@ class TeamInvitation < ActiveRecord::Base
   validate :recipient_already_in_team
 
   before_create :generate_token
-
-  def self_invitation_check
-  	errors.add :recipient_email, "You are already on the team." if recipient_email == User.find(sender_id).email
-  end
-
-  def recipient_already_in_team
-  	errors.add :recipient_email, "#{recipient_email} is already on your team." if check_recipient_already_in_team
-  end
-
-  def check_recipient_already_in_team
-  	if User.find_by_email(recipient_email)
-  		recipient = User.find_by_email(recipient_email)
-  		Team.find(team).team_memberships.find_by_user_id(recipient)
-  	end
-  end
 
   def recipient_already_registered?(email, team)
   	if User.find_by_email(email)
@@ -41,6 +28,21 @@ class TeamInvitation < ActiveRecord::Base
   end
 
 private
+
+  def self_invitation_check
+    errors.add :recipient_email, "You are already on the team." if recipient_email == User.find(sender_id).email
+  end
+
+  def recipient_already_in_team
+    errors.add :recipient_email, "#{recipient_email} is already on your team." if check_recipient_already_in_team
+  end
+
+  def check_recipient_already_in_team
+    if User.find_by_email(recipient_email)
+      recipient = User.find_by_email(recipient_email)
+      Team.find(team).team_memberships.find_by_user_id(recipient)
+    end
+  end
 
 	def generate_token
 		self.token = Digest::SHA1.hexdigest([Time.now, rand].join)

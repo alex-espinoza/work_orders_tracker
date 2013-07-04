@@ -23,6 +23,7 @@ class OrdersController < ApplicationController
 
   def show
   	@order = Order.find(params[:id])
+  	@order_response = OrderResponse.new
   end
 
   def edit
