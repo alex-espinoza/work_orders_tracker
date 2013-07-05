@@ -43,17 +43,6 @@ class User < ActiveRecord::Base
   validates_length_of :last_name, :maximum => 50
   validate :if_token_already_used
 
-  def if_token_already_used
-    errors.add :invitation_token, "has already been used." if check_if_token_already_used
-  end
-
-  def check_if_token_already_used
-    if TeamInvitation.find_by_token(invitation_token)
-      existing_token = TeamInvitation.find_by_token(invitation_token)
-      User.find_by_invitation_id(existing_token)
-    end
-  end
-
   def invitation_token
     invitation.token if invitation
   end
@@ -67,6 +56,17 @@ class User < ActiveRecord::Base
   end
 
 private
+
+  def if_token_already_used
+    errors.add :invitation_token, "has already been used." if check_if_token_already_used
+  end
+
+  def check_if_token_already_used
+    if TeamInvitation.find_by_token(invitation_token)
+      existing_token = TeamInvitation.find_by_token(invitation_token)
+      User.find_by_invitation_id(existing_token)
+    end
+  end
 
   def add_user_to_team
     team_membership = TeamMembership.new
