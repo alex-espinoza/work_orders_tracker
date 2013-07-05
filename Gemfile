@@ -11,6 +11,10 @@ gem 'state_machine'
 gem 'carrierwave'
 gem 'mini_magick'
 gem "fog", "~> 1.3.1"
+gem 'carrierwave_backgrounder'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
 gem 'cancan'
 
 # Gems used only for assets and not required

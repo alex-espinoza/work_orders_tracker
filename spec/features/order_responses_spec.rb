@@ -15,7 +15,7 @@ describe "Order Responses" do
 		sign_in_as(manager)
 		click_on "Test Maintenance Team"
 		click_on "Wall needs to be destroyed"
-		expect(page).to have_content("Responses")
+		expect(page).to have_content("No responses have been left")
 	end
 
 	it "should redirect back to the order show page after creating a response." do

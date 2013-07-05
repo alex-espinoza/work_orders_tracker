@@ -1,7 +1,10 @@
+require 'file_size_validator'
+
 class Order < ActiveRecord::Base
   attr_accessible :description, :file_attachment, :high_priority, :name, :status, :team_id, :manager_id, :worker_id
 
   mount_uploader :file_attachment, AttachmentUploader
+  process_in_background :file_attachment
 
   has_many :order_responses,
   	inverse_of: :order
@@ -24,6 +27,10 @@ class Order < ActiveRecord::Base
   validates_presence_of :worker_id
   validates_length_of :name, :minimum => 4, :maximum => 140
   validates_length_of :description, :minimum => 4, :maximum => 800
+  validates :file_attachment,
+    :file_size => {
+      :maximum => 5.megabytes.to_i
+    }
 
   state_machine :status, :initial => :assigned do
     event :complete do

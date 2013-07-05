@@ -3,3 +3,8 @@
 
 en:
   hello: "Hello world"
+  errors:
+    messages:
+      wrong_size: "size is the wrong size (should be %{file_size})"
+      size_too_small: "size is too small (should be at least %{file_size})"
+      size_too_big: "size is too big (should be at most %{file_size})"

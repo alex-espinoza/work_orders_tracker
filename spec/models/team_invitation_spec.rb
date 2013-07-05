@@ -25,7 +25,5 @@ describe TeamInvitation do
 		it { should_not allow_value("blah").for(:recipient_email) }
 		it { should allow_value("blah@blah.com").for(:recipient_email) }
 		it { should ensure_length_of(:recipient_email).is_at_least(6).is_at_most(100) }
-
-		# it { should validate_uniqueness_of(:sender_id).scoped_to(:recipient_email, :team_id) }
 	end
 end

@@ -1,7 +1,13 @@
+require 'sidekiq/web'
+
 WorkOrdersTracker::Application.routes.draw do
   root :to => "teams#index"
 
   devise_for :users, :controllers => { :registrations => "registrations" }
+
+  authenticate :user, lambda { |u| u.id == 1 } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
   devise_scope :user do
     get "users/sign_up/:invitation_token", :to => "registrations#new_with_token", :as => :new_user_token_registration
