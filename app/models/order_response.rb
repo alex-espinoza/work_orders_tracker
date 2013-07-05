@@ -1,6 +1,8 @@
 class OrderResponse < ActiveRecord::Base
   attr_accessible :file_attachment, :response, :order_id, :user_id
 
+  mount_uploader :file_attachment, AttachmentUploader
+
   belongs_to :order,
   	inverse_of: :order_responses
 

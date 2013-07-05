@@ -4,14 +4,21 @@
 
 <p>Description: <%= @order.description %></p>
 
-<%= image_tag @order.file_attachment_url(:square), class: "thumbnail-size-image" if @order.file_attachment? %>
+<%= link_to @order.file_attachment_url do %>
+	<%= image_tag @order.file_attachment_url(:thumb), class: "thumbnail-size-image" if @order.file_attachment? %>
+<% end %>
 
-<%= image_tag @order.file_attachment_url, class: "full-size-image" if @order.file_attachment? %>
-
+<% if @order.order_responses.length > 0 %>
 <h3>Responses</h3>
+<% else %>
+<h3>No responses have been left</h3>
+<% end %>
 	<table>
 		<% @order.order_responses.each do |response| %>
 		<tr>
+			<td>
+				<%= link_to "View attachment", response.file_attachment_url if response.file_attachment? %>
+			</td>
 			<td><%= "#{response.user.get_full_name} responded: #{response.response}" %></td>
 		</tr>
 		<% end %>
