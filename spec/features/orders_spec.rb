@@ -240,6 +240,19 @@ describe "Orders" do
 		end
 	end
 
+	it "send an email notification to a worker when they are assigned a new work order." do
+		sign_in_as(manager)
+		click_link "Test Maintenance Team"
+		click_link "Create work order"
+		fill_in "Work order name", :with => "Wall needs to be repainted"
+		fill_in "Description", :with => "Left wall in room 146 is chipping paint badly. Repaint when clients are out after 2 PM."
+		select("#{worker.get_full_name}", :from => "Assign work order to")
+		click_button "Create work order"
+		new_work_order = Order.first
+		notification_email = ActionMailer::Base.deliveries.last
+		expect(notification_email.body.raw_source).to have_content("You have been assigned a new work order by #{manager.get_full_name}.")
+	end
+
 	it "clicking on an work order's name will bring you to that order's page." do
 		valid_work_order
 		sign_in_as(worker)
