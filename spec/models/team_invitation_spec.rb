@@ -3,14 +3,16 @@ require 'spec_helper'
 describe TeamInvitation do
 	let!(:team) { FactoryGirl.create(:invitations_test_team) }
 	let!(:user) { FactoryGirl.create(:new_user) }
+  let!(:manager) { FactoryGirl.create(:inviter_manager) }
 	let!(:membership) { FactoryGirl.create(:invitations_test_membership, user: user, team: team, role: "worker") }
+  let!(:invitation) { FactoryGirl.build(:test_invitation, team: team, sender: manager, recipient_email: user.email) }
 
   it { should belong_to(:team) }
   it { should belong_to(:sender) }
 
   it "ensure recipient_already_registered? method works correctly." do
   	team_invitation = TeamInvitation.new
-  	team_invitation.recipient_already_registered?("johndoe@test.com", team)
+  	team_invitation.recipient_already_registered?(invitation, team)
   	expect(team.team_memberships.all.count).to eq(2)
   end
 

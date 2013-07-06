@@ -63,8 +63,8 @@ describe "Team Invitations" do
 			fill_in "Email address", with: "user_does_not_exist@test.com"
 			click_button "Invite worker"
 			expect(page).to have_content("Your invitation has been sent")
-			last_invitation = ActionMailer::Base.deliveries.last
-			expect(last_invitation.body.raw_source).to have_content("#{manager.email} has invited you to join")
+			invitation_email = ActionMailer::Base.deliveries.last
+			expect(invitation_email.body.raw_source).to have_content("#{manager.email} has invited you to join")
 			expect(team.team_invitations.all.count).to eq(1)
 		end
 
@@ -77,6 +77,17 @@ describe "Team Invitations" do
 			expect(page).to have_content("#{worker.email} has been added to your team.")
 			expect(team.team_invitations.find_by_recipient_email(worker.email).existed_when_invited).to eq("yes")
 			expect(team.team_memberships.all.count).to eq(2)
+			expect(team.team_invitations.all.count).to eq(1)
+		end
+
+		it "when a registered user is auto-added to the team, send them a notifcation email." do
+			sign_in_as(manager)
+			visit team_path(team)
+			click_link "Add worker to team"
+			fill_in "Email address", with: worker.email
+			click_button "Invite worker"
+			invitation_email = ActionMailer::Base.deliveries.last
+			expect(invitation_email.body.raw_source).to have_content("#{manager.email} has added you to their team on WorkOrdersTracker!")
 			expect(team.team_invitations.all.count).to eq(1)
 		end
 
