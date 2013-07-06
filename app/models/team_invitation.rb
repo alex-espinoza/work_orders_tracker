@@ -20,7 +20,7 @@ class TeamInvitation < ActiveRecord::Base
   		team_membership = team.team_memberships.build
   		team_membership.user = User.find_by_email(invitation.recipient_email)
   		team_membership.save
-      InvitationMailer.existing_user_team_invitation(invitation, team).deliver
+      InvitationMailer.delay.existing_user_team_invitation(invitation, team)
   	end
   end
 

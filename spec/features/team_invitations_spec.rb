@@ -20,6 +20,8 @@ describe "Team Invitations" do
 	end
 
 	describe "- when inviting a user to a team -" do
+		after(:each) { Sidekiq::Extensions::DelayedMailer.jobs.clear }
+
 		it "only a team manager should be able to invite users." do
 			sign_in_as(manager)
 			click_link "Test Maintenance Team"
@@ -63,9 +65,7 @@ describe "Team Invitations" do
 			fill_in "Email address", with: "user_does_not_exist@test.com"
 			click_button "Invite worker"
 			expect(page).to have_content("Your invitation has been sent")
-			invitation_email = ActionMailer::Base.deliveries.last
-			expect(invitation_email.body.raw_source).to have_content("#{manager.email} has invited you to join")
-			expect(team.team_invitations.all.count).to eq(1)
+			expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq(1)
 		end
 
 		it "if the user is registered, automatically add them to the team." do
@@ -86,9 +86,7 @@ describe "Team Invitations" do
 			click_link "Add worker to team"
 			fill_in "Email address", with: worker.email
 			click_button "Invite worker"
-			invitation_email = ActionMailer::Base.deliveries.last
-			expect(invitation_email.body.raw_source).to have_content("#{manager.email} has added you to their team on WorkOrdersTracker!")
-			expect(team.team_invitations.all.count).to eq(1)
+			expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq(1)
 		end
 
 		it "a manager cannot invite a worker that is already on the team." do
