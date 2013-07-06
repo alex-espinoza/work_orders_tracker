@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
 
 		if @order.save
 			@order.assign_order_to_user(@team, params[:order][:worker_id])
-			OrderMailer.new_work_order_assigned(@order).deliver if @order.worker.email != current_user.email
+			OrderMailer.delay.new_work_order_assigned(@order) if @order.worker.email != current_user.email
 			flash[:notice] = "Work order has been created and was assigned to #{@order.worker.get_full_name}."
 			redirect_to team_path(@team)
 		else

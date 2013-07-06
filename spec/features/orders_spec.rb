@@ -21,6 +21,7 @@ describe "Orders" do
 		orders_for_worker_2
 		orders_for_worker_3
 	end
+	after(:each) { Sidekiq::Extensions::DelayedMailer.jobs.clear }
 
 	describe "- a manager -" do
 		let(:completed_work_order) { FactoryGirl.create(:completed_work_order, team: team, manager: manager, worker: worker) }
@@ -248,9 +249,8 @@ describe "Orders" do
 		fill_in "Description", :with => "Left wall in room 146 is chipping paint badly. Repaint when clients are out after 2 PM."
 		select("#{worker.get_full_name}", :from => "Assign work order to")
 		click_button "Create work order"
-		new_work_order = Order.first
-		notification_email = ActionMailer::Base.deliveries.last
-		expect(notification_email.body.raw_source).to have_content("You have been assigned a new work order by #{manager.get_full_name}.")
+		expect(Sidekiq::Extensions::DelayedMailer.jobs.first).to have_content("Wall needs to be repainted")
+		expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq(1)
 	end
 
 	it "clicking on an work order's name will bring you to that order's page." do

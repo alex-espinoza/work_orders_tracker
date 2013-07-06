@@ -39,6 +39,7 @@ end
 group :test do
 	gem 'factory_girl_rails'
 	gem "shoulda-matchers"
+	gem "rspec-sidekiq"
 end
 
 group :development do
