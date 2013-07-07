@@ -74,7 +74,7 @@ describe "Order Responses" do
 			click_link "Test Maintenance Team"
 			click_link "Wall needs to be destroyed"
 			click_link "Close"
-			click_link "Sign Out"
+			click_link "(sign out)"
 			sign_in_as(worker_2)
 			click_link "Test Maintenance Team"
 			click_link "Wall needs to be destroyed"

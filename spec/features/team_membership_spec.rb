@@ -12,7 +12,7 @@ describe "Team Memberships" do
 		sign_in_as(manager_1)
 		expect(page).to have_link("Test Maintenance Team")
 		expect(page).to_not have_link("Test Gardening Team")
-		click_link("Sign Out")
+		click_link "(sign out)"
 		sign_in_as(manager_2)
 		expect(page).to have_link("Test Gardening Team")
 		expect(page).to_not have_link("Test Maintenance Team")

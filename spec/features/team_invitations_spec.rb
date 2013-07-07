@@ -155,7 +155,7 @@ describe "Team Invitations" do
 			test_invitation
 			visit "/users/sign_up/#{test_invitation.token}"
 			test_invitation_sign_up
-			click_link "Sign Out"
+			click_link "(sign out)"
 			visit "/users/sign_up/#{test_invitation.token}"
 			test_invitation_sign_up
 			expect(page).to have_content("Invitation token has already been used")
