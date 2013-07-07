@@ -1,0 +1,19 @@
+@import "bootstrap";
+
+body { padding-top: 60px; }
+
+@import "bootstrap-responsive";
+
+.navbar .nav {
+	float: right;
+}
+
+.navbar .nav .signin {
+	color: #999;
+	padding: 10px 15px 10px;
+}
+
+.navbar .nav .signoutlink {
+	padding: 0px;
+	display: inline;
+}
