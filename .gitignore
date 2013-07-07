@@ -23,3 +23,6 @@
 
 # Ignore AWS access key info
 /config/initializers/app_environment_variables.rb
+
+# Ignore database.yml
+/config/database.yml
