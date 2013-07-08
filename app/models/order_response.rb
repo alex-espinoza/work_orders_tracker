@@ -4,7 +4,7 @@ class OrderResponse < ActiveRecord::Base
   attr_accessible :file_attachment, :response, :order_id, :user_id
 
   mount_uploader :file_attachment, AttachmentUploader
-  process_in_background :file_attachment
+  # process_in_background :file_attachment
 
   belongs_to :order,
   	inverse_of: :order_responses
