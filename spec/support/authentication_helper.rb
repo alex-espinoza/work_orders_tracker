@@ -3,7 +3,7 @@ module AuthenticationHelper
 		visit new_user_session_path
 		fill_in "Email address", :with => user.email
 		fill_in "Password", :with => user.password
-		click_button "Sign in"
+		click_button "Sign In"
 	end
 
 	def sign_up_as(user)
