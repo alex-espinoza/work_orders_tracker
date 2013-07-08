@@ -4,7 +4,7 @@ class Order < ActiveRecord::Base
   attr_accessible :description, :file_attachment, :high_priority, :name, :status, :team_id, :manager_id, :worker_id
 
   mount_uploader :file_attachment, AttachmentUploader
-  process_in_background :file_attachment
+  # process_in_background :file_attachment
 
   has_many :order_responses,
   	inverse_of: :order
