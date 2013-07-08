@@ -1,13 +1,11 @@
-<h1>Teams</h1>
-<%= button_to "Create new team", new_team_path, :class => "btn btn-primary", :method => :get %>
+<div class="span8 offset2">
+	<h1>Teams</h1>
 
-	<table>
-		<tr>
-			<td>Name</td>
-		</tr>
-		<% @team.each do |team| %>
-		<tr>
-			<td><%= link_to team.team_name, team_path(team) %></td>
-		</tr>
-		<% end %>
-	</table>
+		<ul class="nav nav-tabs nav-stacked">
+			<% @team.each do |team| %>
+				<li><%= link_to team.team_name, team_path(team) %></li>
+			<% end %>
+		</ul>
+
+		<%= button_to "Create new team", new_team_path, :class => "btn btn-primary", :method => :get %>
+</div>
