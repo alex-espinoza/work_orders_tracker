@@ -14,7 +14,7 @@
 /log/*.log
 /tmp
 
-# Ignore mail server config file.
+# Ignore mail server config file..
 /config/initializers/setup_mail.rb
 
 # Ignore public upload files
