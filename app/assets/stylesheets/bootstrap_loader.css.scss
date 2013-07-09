@@ -19,9 +19,12 @@ body { padding-top: 60px; }
 }
 
 .horizontal-button-group {
-	display: inline;
-	float: right;
+	text-align: right;
 	margin-bottom: 20px;
+}
+
+.horizontal-button-group-order-show {
+	text-align: right;
 }
 
 .table {
@@ -33,4 +36,37 @@ body { padding-top: 60px; }
 .label {
 	font-size: 14px;
 	font-weight: normal;
+}
+
+.work-order-unit {
+	padding: 20px;
+	margin-bottom: 30px;
+	color: inherit;
+	background-color: #eeeeee;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.no-line-height {
+	line-height: 0;
+}
+
+.response-padding {
+	line-height: 14px;
+	padding-bottom: 12px;
+}
+
+.no-margin {
+	margin: 0;
+}
+
+.header3 {
+	font-size: 24.5px;
+	margin: 10px 0;
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 40px;
+	color: inherit;
+	text-rendering: optimizelegibility;
 }

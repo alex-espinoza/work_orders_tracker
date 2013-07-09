@@ -11,10 +11,11 @@
     </div>
   <% end %>
 
-	<div><%= f.label :response %><br />
-	<%= f.text_area :response, :size => "40x10" %></div>
+	<div><%= f.label :response, "Leave a response", :class => "header3" %>
+	<%= f.text_area :response, :size => "40x10", :class => "span6" %></div>
 
-  <div><%= f.file_field :file_attachment %></div>
+  <div><%= f.label :response, "Image attachment" %>
+  <%= f.file_field :file_attachment %></div>
 
-	<div><%= f.submit "Leave response" %></div>
+	<div><%= f.submit "Leave response", :class => "btn btn-primary" %></div>
 <% end %>
