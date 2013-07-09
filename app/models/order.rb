@@ -57,4 +57,17 @@ class Order < ActiveRecord::Base
     manager_id == user.id || worker_id == user.id
   end
 
+  def check_status_for_table(status)
+    case status
+    when "assigned"
+      "warning"
+    when "completed"
+      "success"
+    when "closed"
+      "error"
+    else
+      ""
+    end
+  end
+
 end
