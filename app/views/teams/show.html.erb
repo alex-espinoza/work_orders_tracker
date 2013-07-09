@@ -19,10 +19,10 @@
 		</tr>
 		<% @team.orders.each do |order| %>
 			<% if order.assigned_to?(current_user) %>
-			<tr class="<%= order.check_status_for_table(order.status) %>">
+			<tr class="<%= order.check_status_for_row_color(order.status) %>">
 				<td><%= link_to order.name, team_order_path(@team, order) %></td>
 				<td><%= order.worker.get_full_name %></td>
-				<td><%= order.status.capitalize %></td>
+				<td><span class="<%= order.check_status_for_label_color(order.status) %>"><%= order.status.capitalize %></span></td>
 			</tr>
 			<% end %>
 		<% end %>

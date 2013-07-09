@@ -57,7 +57,7 @@ class Order < ActiveRecord::Base
     manager_id == user.id || worker_id == user.id
   end
 
-  def check_status_for_table(status)
+  def check_status_for_row_color(status)
     case status
     when "assigned"
       "warning"
@@ -65,6 +65,19 @@ class Order < ActiveRecord::Base
       "success"
     when "closed"
       "error"
+    else
+      ""
+    end
+  end
+
+  def check_status_for_label_color(status)
+    case status
+    when "assigned"
+      "label label-warning"
+    when "completed"
+      "label label-success"
+    when "closed"
+      "label label-important"
     else
       ""
     end
