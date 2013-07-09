@@ -14,7 +14,7 @@ class TeamInvitationsController < ApplicationController
 		@invitation.team = @team
 
 		if @invitation.save
-			if @invitation.recipient_already_registered?(@invitation, @team)
+			if @invitation.check_if_recipient_already_registered(@invitation, @team)
 				@invitation.set_as_existed_when_invited
 				flash[:notice] = "#{@invitation.recipient_email} has been added to your team."
 				redirect_to new_team_team_invitation_path(params[:team_id])
