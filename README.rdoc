@@ -12,7 +12,7 @@ state_machine: Used to transition the status of work orders, the helper methods 
 
 Carrierwave: I was originally going to use Paperclip but I found carrierwave easier to set up with S3 uploads and the processing features are nice. Used to add images to work orders.
 
-Carrierwave backgrounder: I don't want my app tied up when uploading and processing images, so it best to delegate these jobs to a background processor, which calls for...
+Carrierwave backgrounder: I don't want my app tied up when uploading and processing images, so it's best to delegate these jobs to a background processor, which calls for...
 
 Sidekiq/Redis: Super easy and simple to use. I have also been told it is way better than Resque.
 
