@@ -22,7 +22,7 @@
 			<tr class="<%= order.check_status_for_row_color(order.status) %>">
 				<td><%= link_to order.name, team_order_path(@team, order) %></td>
 				<td><%= order.worker.get_full_name %></td>
-				<td><span class="<%= order.check_status_for_label_color(order.status) %>"><%= order.status.capitalize %></span></td>
+				<td><span class="<%= order.check_status_for_label_color(order.status) %>"><%= order.status.capitalize %></span><% if order.high_priority? %> <i class="icon-warning-sign"></i><% end %></td>
 			</tr>
 			<% end %>
 		<% end %>

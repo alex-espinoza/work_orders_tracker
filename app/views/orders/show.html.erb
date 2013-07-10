@@ -2,7 +2,7 @@
 	<div class="work-order-unit span8 offset2">
 		<h1><%= @order.name %></h1>
 
-		<p><strong>Current status:</strong> <span class="<%= @order.check_status_for_label_color(@order.status) %>"><%= @order.status.capitalize %></span></p>
+		<p><strong>Current status:</strong> <span class="<%= @order.check_status_for_label_color(@order.status) %>"><%= @order.status.capitalize %></span><% if @order.high_priority? %> <i class="icon-warning-sign"></i><% end %></p>
 
 		<p><strong>Assigned to:</strong> <%= @order.worker.get_full_name %></p>
 
