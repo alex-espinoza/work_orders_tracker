@@ -1,13 +1,13 @@
-<div class="span8 offset2">
+<div class="work-order-unit span8 offset2">
 	<h1>Work orders</h1>
 
 	<div class="horizontal-button-group">
 		<% if @team.managed_by?(current_user) %>
-			<%= link_to "Add worker to team", new_team_team_invitation_path(@team), :class => "btn", :method => :get %>
+			<%= link_to " Add worker to team ", new_team_team_invitation_path(@team), :class => "flat-butt flat-inner-butt", :method => :get %>
 		<% end %>
 
 		<% if @team.managed_by?(current_user) %>
-			<%= link_to "Create work order", new_team_order_path(@team), :class => "btn", :method => :get %>
+			<%= link_to " Create work order ", new_team_order_path(@team), :class => "flat-butt flat-inner-butt", :method => :get %>
 		<% end %>
 	</div>
 

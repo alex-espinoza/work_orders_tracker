@@ -111,7 +111,18 @@ button {
   cursor: pointer;
   outline: 0;
 }
+
+a .flat-butt {
+  color: #FFF;
+}
+
 .flat-butt:hover {
+  background: #005580;
+}
+
+.flat-butt:hover {
+	color: #FFF;
+	text-decoration: none;
   background: #005580;
 }
 .flat-primary-butt {
@@ -202,6 +213,7 @@ button {
   padding: 11px 0px;
   box-shadow: inset #2C3E50 -3px -3px 0px;
 }
+
 .flat-primary-inner-butt {
   background: #1ABC9C;
   box-shadow: inset #16A085 -3px -3px 0px;
