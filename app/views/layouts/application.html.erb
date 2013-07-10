@@ -14,7 +14,7 @@
 	<div class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
       <div class="container">
-        <a class="brand" href="#">OrderTrak</a>
+        <a class="brand" href="/">OrderTrak</a>
         <ul class="nav">
 	        <% if signed_in? %>
 	        <li class="signin">Hello, <%= current_user.first_name %> <%= link_to "(sign out)", destroy_user_session_path, :method => :delete, :class => "signoutlink" %></li>
@@ -26,10 +26,14 @@
     </div>
   </div>
 
-	<p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-
-<%= yield %>
+  <div class="container">
+    <div class="row-fluid">
+      <% if flash[:error] %><p class="alert alert-error"><%= error %></p><% end %>
+      <% if flash[:success] %><p class="alert alert-success"><%= success %></p><% end %>
+      <% if flash[:notice] %><p class="alert alert-info"><%= notice %></p><% end %>
+        <%= yield %>
+    </div>
+  </div>
 
 </body>
 </html>

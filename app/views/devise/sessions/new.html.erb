@@ -1,17 +1,18 @@
-<h2>Sign in</h2>
+<div class="work-order-unit span8 offset2 text-center">
+	<h1>Welcome to OrderTrak</h1>
+	<p class="lead muted">Please sign in or register to continue.</p>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email, "Email address" %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+		  <div class="control-group"><%= f.label :email, "Email address", :class => "control-label" %>
+		  <div class="controls"><%= f.email_field :email, :autofocus => true, :class => "span4" %></div></div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
+		  <div class="control-group"><%= f.label :password, :class => "control-label" %>
+		  <div class="controls"><%= f.password_field :password, :class => "span4" %></div></div>
 
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
+		  <div class="controls"><%= f.submit "Sign In", :class => "flat-butt flat-inner-butt span4" %></div>
 
-<%= render "devise/shared/links" %>
+		<% end %>
+		or register an account:
+		<%= render "devise/shared/links" %>
+</div>

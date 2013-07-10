@@ -3,7 +3,7 @@ require 'sidekiq/web'
 WorkOrdersTracker::Application.routes.draw do
   root :to => "teams#index"
 
-  devise_for :users, :controllers => { :registrations => "registrations" }
+  devise_for :users, :controllers => { :registrations => "registrations", :except => [:edit] }
 
   authenticate :user, lambda { |u| u.id == 1 } do
     mount Sidekiq::Web => '/sidekiq'

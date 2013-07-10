@@ -1,14 +1,13 @@
-<h1>Teams#index</h1>
-<%= link_to "Create new team", new_team_path %>
+<div class="work-order-unit span8 offset2">
+	<h1>Teams</h1>
 
-<h3>Teams</h3>
-	<table>
-		<tr>
-			<td>Name</td>
-		</tr>
-		<% @team.each do |team| %>
-		<tr>
-			<td><%= link_to team.team_name, team_path(team) %></td>
-		</tr>
-		<% end %>
-	</table>
+		<ul class="nav nav-tabs nav-stacked">
+			<% @team.each do |team| %>
+				<li><%= link_to team.team_name, team_path(team) %></li>
+			<% end %>
+		</ul>
+
+		<div class="button-align-right">
+			<%= button_to " Create new team ", new_team_path, :class => "flat-butt flat-primary-butt flat-inner-butt flat-primary-inner-butt", :method => :get %>
+		</div>
+</div>

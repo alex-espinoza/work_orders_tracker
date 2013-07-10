@@ -1,47 +1,71 @@
-<h1><%= @order.name %></h1>
+<div class="row-fluid">
+	<div class="work-order-unit span8 offset2">
+		<h1><%= @order.name %></h1>
 
-<p>Current status of this work order: <%= @order.status.capitalize %></p>
+		<p><strong>Current status:</strong> <span class="<%= @order.check_status_for_label_color(@order.status) %>"><%= @order.status.capitalize %></span><% if @order.high_priority? %> <i class="icon-warning-sign"></i><% end %></p>
 
-<p>Description: <%= @order.description %></p>
+		<p><strong>Assigned to:</strong> <%= @order.worker.get_full_name %></p>
 
-<%= link_to @order.file_attachment_url do %>
-	<%= image_tag @order.file_attachment_url(:thumb), class: "thumbnail-size-image" if @order.file_attachment? %>
-<% end %>
+		<p><strong>Description:</strong> <%= @order.description %></p>
 
-<% if @order.order_responses.length > 0 %>
-<h3>Responses</h3>
-<% else %>
-<h3>No responses have been left</h3>
-<% end %>
-	<table>
-		<% @order.order_responses.each do |response| %>
-		<tr>
-			<td>
-				<%= link_to "View attachment", response.file_attachment_url if response.file_attachment? %>
-			</td>
-			<td><%= "#{response.user.get_full_name} responded: #{response.response}" %></td>
-		</tr>
+		<%= link_to @order.file_attachment_url do %>
+			<p><%= image_tag @order.file_attachment_url(:thumb), class: "thumbnail-size-image" if @order.file_attachment? %></p>
 		<% end %>
-	</table>
 
-<% unless @order.closed? %>
-	<%= render 'order_responses/form' %>
-<% end %>
+		<div class="horizontal-button-group-order-show">
+			<p>
+			<% if @order.assigned? %>
+				<%= link_to "Complete", team_order_complete_path(@team, @order), :method => :put, :class => "flat-butt flat-primary-butt flat-inner-butt flat-primary-inner-butt" %>
+			<% end %>
 
-<% if @order.assigned? %>
-	<p><%= link_to "Complete", team_order_complete_path(@team, @order), :method => :put %></p>
-<% end %>
+			<% if @order.completed? && @team.managed_by?(current_user) %>
+				<%= link_to "Reassign", team_order_reassign_path(@team, @order), :method => :put, :class => "flat-butt flat-warning-butt flat-inner-butt flat-warning-inner-butt" %>
+			<% end %>
 
-<% if @order.completed? && @team.managed_by?(current_user) %>
-	<p><%= link_to "Reassign", team_order_reassign_path(@team, @order), :method => :put %></p>
-<% end %>
+			<% if (@order.completed? || @order.assigned?) && @team.managed_by?(current_user) %>
+				<%= link_to "Close", team_order_close_path(@team, @order), :method => :put, :class => "flat-butt flat-danger-butt flat-inner-butt flat-danger-inner-butt" %>
+			<% end %>
 
-<% if (@order.completed? || @order.assigned?) && @team.managed_by?(current_user) %>
-	<p><%= link_to "Close", team_order_close_path(@team, @order), :method => :put %></p>
-<% end %>
+			<% if !@order.closed? && @team.managed_by?(current_user) %>
+				<%= link_to "Edit", edit_team_order_path(@team, @order), :class => "flat-butt flat-inner-butt" %>
+			<% end %>
+			</p>
+		</div>
+	</div>
 
-<% if !@order.closed? && @team.managed_by?(current_user) %>
-	<p><%= link_to "Edit work order", edit_team_order_path(@team, @order) %></p>
-<% end %>
+	<div class="row-fluid">
+		<div class="work-order-unit span8 offset2 no-line-height">
+			<% if @order.order_responses.length > 0 %>
+			<h3>Responses</h3>
+			<% else %>
+			<h3>No responses have been left</h3>
+			<% end %>
+			<table>
+				<% @order.order_responses.each do |response| %>
+					<tr>
+						<td class="response-padding well well-small">
+							<p class="no-margin"><strong><%= "#{response.user.get_full_name}:" %></strong><%= " #{response.response}" %></p>
+							<% if response.file_attachment? %>
+							<p class="no-margin"><i class="icon-picture"></i><%= link_to " View attachment", response.file_attachment_url %></p>
+							<% end %>
+						</td>
+					</tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
 
-<p><%= link_to "Back", team_path(@team) %></p>
+	<div class="row-fluid">
+		<div class="work-order-unit span8 offset2">
+			<% unless @order.closed? %>
+				<%= render 'order_responses/form' %>
+			<% end %>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="\span8 offset2">
+			<p><%= link_to "Back", team_path(@team) %></p>
+		</div>
+	</div>
+</div>

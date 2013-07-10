@@ -2,8 +2,6 @@ class Ability
   include CanCan::Ability
 
   def initialize(user, params)
-    # user ||= User.new
-
     can [:index, :new, :create], Team do
       user.id != nil
     end
@@ -23,7 +21,10 @@ class Ability
     end
 
     can [:show], Order do |order|
-      user.id == order.worker.id || user.id == order.manager.id
+      team = params[:team_id]
+      if user.id == order.worker.id || user.id == order.manager.id
+        order.team_id == team.to_i
+      end
     end
 
     can [:create], OrderResponse do |response|

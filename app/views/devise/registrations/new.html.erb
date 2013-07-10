@@ -1,24 +1,25 @@
-<h2>Sign up</h2>
+<div class="work-order-unit span8 offset2 text-center">
+  <h1>Create a new account</h1>
+  <p class="lead muted">Please fill in all of the required fields below.</p>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+    <%= devise_error_messages! %>
 
-  <div><%= f.label :first_name %><br />
-  <%= f.text_field :first_name %></div>
+    <div class="control-group"><%= f.label :first_name, :class => "control-label" %>
+    <div class="controls"><%= f.text_field :first_name, :class => "span4" %></div></div>
 
-  <div><%= f.label :last_name %><br />
-  <%= f.text_field :last_name %></div>
+    <div class="control-group"><%= f.label :last_name, :class => "control-label" %>
+    <div class="controls"><%= f.text_field :last_name, :class => "span4" %></div></div>
 
-  <div><%= f.label :email, "Email address" %><br />
-  <%= f.email_field :email %></div>
+    <div class="control-group"><%= f.label :email, "Email address", :class => "control-label" %>
+    <div class="controls"><%= f.email_field :email, :class => "span4" %></div></div>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+    <div class="control-group"><%= f.label :password, :class => "control-label" %>
+    <div class="controls"><%= f.password_field :password, :class => "span4" %></div></div>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+    <div class="control-group"><%= f.label :password_confirmation, "Please type in password again", :class => "control-label" %>
+    <div class="controls"><%= f.password_field :password_confirmation, :class => "span4" %></div></div>
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+    <div class="controls"><%= f.submit "Sign Up", :class => "flat-butt flat-inner-butt span4" %></div>
+  <% end %>
+</div>

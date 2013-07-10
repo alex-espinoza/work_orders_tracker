@@ -22,7 +22,7 @@ describe "Order Responses" do
 		sign_in_as(manager)
 		click_on "Test Maintenance Team"
 		click_on "Wall needs to be destroyed"
-		fill_in "Response", :with => "Should I use the hammer or jackhammer?"
+		fill_in "Leave a response", :with => "Should I use the hammer or jackhammer?"
 		click_button "Leave response"
 		expect(page).to have_content("You have successfully left a response")
 		expect(page).to have_content("Should I use the hammer or jackhammer?")
@@ -32,7 +32,7 @@ describe "Order Responses" do
 		sign_in_as(manager)
 		click_on "Test Maintenance Team"
 		click_on "Wall needs to be destroyed"
-		fill_in "Response", :with => "asd"
+		fill_in "Leave a response", :with => "asd"
 		click_button "Leave response"
 		expect(page).to have_content("error prohibited this response from being made")
 	end
@@ -42,7 +42,7 @@ describe "Order Responses" do
 			sign_in_as(manager)
 			click_on "Test Maintenance Team"
 			click_on "Wall needs to be destroyed"
-			fill_in "Response", :with => "Should I use the hammer or jackhammer?"
+			fill_in "Leave a response", :with => "Should I use the hammer or jackhammer?"
 			click_button "Leave response"
 			expect(page).to have_content("You have successfully left a response")
 		end
@@ -63,7 +63,7 @@ describe "Order Responses" do
 			expect(page).to have_content("Wall needs to be repainted")
 			expect(page).to_not have_content("Wall needs to be destroyed")
 			click_on "Wall needs to be repainted"
-			fill_in "Response", :with => "Should I use the hammer or paintbrush?"
+			fill_in "Leave a response", :with => "Should I use the hammer or paintbrush?"
 			click_on "Leave response"
 			expect(page).to have_content("You have successfully left a response")
 			expect(page).to have_content("Should I use the hammer or paintbrush?")

@@ -10,9 +10,9 @@ describe TeamInvitation do
   it { should belong_to(:team) }
   it { should belong_to(:sender) }
 
-  it "ensure recipient_already_registered? method works correctly." do
+  it "ensure check_if_recipient_already_registered method works correctly." do
   	team_invitation = TeamInvitation.new
-  	team_invitation.recipient_already_registered?(invitation, team)
+  	team_invitation.check_if_recipient_already_registered(invitation, team)
   	expect(team.team_memberships.all.count).to eq(2)
   end
 

@@ -15,7 +15,7 @@ class TeamInvitation < ActiveRecord::Base
 
   before_create :generate_token
 
-  def recipient_already_registered?(invitation, team)
+  def check_if_recipient_already_registered(invitation, team)
   	if User.find_by_email(invitation.recipient_email)
   		team_membership = team.team_memberships.build
   		team_membership.user = User.find_by_email(invitation.recipient_email)

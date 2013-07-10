@@ -71,7 +71,7 @@ describe "Orders" do
 			sign_in_as(manager)
 			click_link "Test Maintenance Team"
 			click_link "Wall needs to be repainted"
-			click_link "Edit work order"
+			click_link "Edit"
 			fill_in "Work order name", :with => "Wall needs to be sanded and painted"
 			fill_in "Description", :with => "Left wall in room 146 is chipping paint badly. Sand away and repaint when clients are out after 2 PM."
 			click_button "Save changes"
@@ -85,7 +85,7 @@ describe "Orders" do
 			sign_in_as(manager)
 			click_link "Test Maintenance Team"
 			click_link "Wall needs to be repainted"
-			click_link "Edit work order"
+			click_link "Edit"
 			fill_in "Work order name", :with => "asd"
 			fill_in "Description", :with => "asd"
 			click_button "Save changes"
@@ -111,7 +111,7 @@ describe "Orders" do
 			sign_in_as(manager)
 			click_link "Test Maintenance Team"
 			click_link "Wall needs to be repainted"
-			click_link "Edit work order"
+			click_link "Edit"
 			select("#{manager.get_full_name}", :from => "Assign work order to")
 			click_button "Save changes"
 			expect(page).to have_content("Work order has been successfully updated.")

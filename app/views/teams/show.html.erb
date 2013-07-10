@@ -1,22 +1,32 @@
-<h1>Teams#show</h1>
+<div class="work-order-unit span8 offset2">
+	<h1>Work orders</h1>
 
-<% if @team.managed_by?(current_user) %>
-	<p><%= link_to "Add worker to team", new_team_team_invitation_path(@team) %></p>
-<% end %>
+	<div class="horizontal-button-group">
+		<% if @team.managed_by?(current_user) %>
+			<%= link_to " Add worker to team ", new_team_team_invitation_path(@team), :class => "flat-butt flat-inner-butt", :method => :get %>
+		<% end %>
 
-<% if @team.managed_by?(current_user) %>
-	<p><%= link_to "Create work order", new_team_order_path(@team) %></p>
-<% end %>
+		<% if @team.managed_by?(current_user) %>
+			<%= link_to " Create work order ", new_team_order_path(@team), :class => "flat-butt flat-inner-butt", :method => :get %>
+		<% end %>
+	</div>
 
-<h3>Work Orders</h3>
-	<table>
+	<table class="table">
+		<tr>
+			<td><strong>Order name</strong></td>
+			<td><strong>Assigned to</strong></td>
+			<td><strong>Status</strong></td>
+		</tr>
 		<% @team.orders.each do |order| %>
 			<% if order.assigned_to?(current_user) %>
-			<tr>
-					<td><%= link_to order.name, team_order_path(@team, order) %> | <%= order.status.capitalize %></td>
+			<tr class="<%= order.check_status_for_row_color(order.status) %>">
+				<td><%= link_to order.name, team_order_path(@team, order) %></td>
+				<td><%= order.worker.get_full_name %></td>
+				<td><span class="<%= order.check_status_for_label_color(order.status) %>"><%= order.status.capitalize %></span><% if order.high_priority? %> <i class="icon-warning-sign"></i><% end %></td>
 			</tr>
 			<% end %>
 		<% end %>
 	</table>
 
 	<p><%= link_to "Back", teams_path %></p>
+</div>

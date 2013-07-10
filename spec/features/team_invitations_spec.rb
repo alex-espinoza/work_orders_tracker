@@ -15,8 +15,8 @@ describe "Team Invitations" do
 		fill_in "Last name", with: "Invited"
 		fill_in "Email address", with: "justgotinvited@test.com"
 		fill_in "Password", with: "123qwe56"
-		fill_in "Password confirmation", with: "123qwe56"
-		click_button "Sign up"
+		fill_in "Please type in password again", with: "123qwe56"
+		click_button "Sign Up"
 	end
 
 	describe "- when inviting a user to a team -" do
@@ -126,7 +126,7 @@ describe "Team Invitations" do
 			test_invitation
 			visit "/users/sign_up/#{test_invitation.token}"
 			test_invitation_sign_up
-			expect(page).to have_content("Teams#index")
+			expect(page).to have_content("Teams")
 			expect(team.team_memberships.all.count).to eq(2)
 			expect(User.all.count).to eq(2)
 			expect(User.find_by_email("justgotinvited@test.com").invitation_token).to eq(test_invitation.token)
@@ -142,9 +142,9 @@ describe "Team Invitations" do
 			fill_in "Last name", with: "Invited"
 			fill_in "Email address", with: "justgotinvited@test.com"
 			fill_in "Password", with: "123qwe56"
-			fill_in "Password confirmation", with: "123qwe56"
-			click_button "Sign up"
-			expect(page).to have_content("Teams#index")
+			fill_in "Please type in password again", with: "123qwe56"
+			click_button "Sign Up"
+			expect(page).to have_content("Teams")
 			expect(team.team_memberships.all.count).to eq(1)
 			expect(User.all.count).to eq(2)
 			expect(User.find_by_email("justgotinvited@test.com").invitation_token).to_not eq(test_invitation.token)
