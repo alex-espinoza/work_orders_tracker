@@ -14,15 +14,12 @@
 /log/*.log
 /tmp
 
-# Ignore mail server config file..
-/config/initializers/setup_mail.rb
-
 # Ignore public upload files
 /public/uploads
 /spec/carrierwave/testimg.jpg
 
-# Ignore AWS access key info
-/config/initializers/app_environment_variables.rb
-
 # Ignore database.yml
 /config/database.yml
+
+# Ignore envinronment variables
+.env
