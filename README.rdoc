@@ -1,0 +1,23 @@
+== work_orders_tracker
+
+Currently a work in progress. This program is a work orders tracking system for building/warehouse maintenance teams. Managers can invite workers to a team and easily assign and keep track of jobs.
+
+---
+
+== Gems used:
+
+Devise: Recommended to me for user authentication
+
+state_machine: Used to transition the status of work orders, the helper methods it provides are nice and make it easy
+
+Carrierwave: I was originally going to use Paperclip but I found carrierwave easier to set up with S3 uploads and the processing features are nice
+
+Carrierwave backgrounder: I don't want my app tied up when uploading and processing, so it best to delegate these jobs to a background processor, which calls for...
+
+Sidekiq/Redis: Super easy and simple to use. I have also been told it is way better than Resque.
+
+Cancan: Used for user authorization. Setting it us is a breeze and defining custom abilities made it really flexible to stop users from being able to access teams, work orders and pages they are not allowed to view. Ryan Bates is the man.
+
+Bootstrap: Speeds up the whole front-end design process and makes my app responsive. Good enough to flesh out an initial design.
+
+Capybara/Launchy/Pry/Factory Girl/Better Errors: How people code without tests is something I will never be able to comprehend. These tools have saved me on countless occasions already. TDD/BDD all the way.
