@@ -1,4 +1,4 @@
-<div class="span8 offset2">
+<div class="work-order-unit span8 offset2">
 	<h1>Teams</h1>
 
 		<ul class="nav nav-tabs nav-stacked">
@@ -7,5 +7,7 @@
 			<% end %>
 		</ul>
 
-		<%= button_to "Create new team", new_team_path, :class => "btn btn-primary pull-right", :method => :get %>
+		<div class="button-align-right">
+			<%= button_to " Create new team ", new_team_path, :class => "flat-butt flat-primary-butt flat-inner-butt flat-primary-inner-butt", :method => :get %>
+		</div>
 </div>
