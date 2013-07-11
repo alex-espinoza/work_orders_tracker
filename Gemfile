@@ -17,6 +17,7 @@ gem 'sinatra', require: false
 gem 'slim'
 gem 'cancan'
 gem 'configatron'
+gem 'google-analytics-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

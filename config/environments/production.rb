@@ -66,4 +66,6 @@ WorkOrdersTracker::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   config.action_mailer.default_url_options = { :host => 'ordertrak.herokuapp.com' }
+
+  GA_tracker = "UA-42366086-1"
 end
