@@ -67,5 +67,5 @@ WorkOrdersTracker::Application.configure do
 
   config.action_mailer.default_url_options = { :host => 'ordertrak.herokuapp.com' }
 
-  GA_tracker = "UA-42366086-1"
+  GA.tracker = "UA-42366086-1"
 end
