@@ -1,0 +1,8 @@
+$('#add-worker-form').remove();
+$('.modal-body').append("<%= j render("team_invitations/invite") %>");
+
+var btn = $('#add-worker-form-submit-button');
+
+btn.click(function() {
+	btn.button('loading');
+});

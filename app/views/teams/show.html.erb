@@ -3,12 +3,17 @@
 
 	<div class="horizontal-button-group">
 		<% if @team.managed_by?(current_user) %>
-			<%= link_to " Add worker to team ", new_team_team_invitation_path(@team), :class => "flat-butt flat-inner-butt", :method => :get %>
+			<%= link_to " Add worker to team ", new_team_team_invitation_path(@team), :class => "flat-butt flat-inner-butt", :method => :get, :id => "add_worker_button", :data => {:toggle	=> "modal", :target => "#add-worker-modal"}, :remote => true %>
 		<% end %>
 
 		<% if @team.managed_by?(current_user) %>
 			<%= link_to " Create work order ", new_team_order_path(@team), :class => "flat-butt flat-inner-butt", :method => :get %>
 		<% end %>
+	</div>
+
+	<div id="add-worker-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-body">
+	  </div>
 	</div>
 
 	<table class="table">

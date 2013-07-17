@@ -28,11 +28,13 @@
   </div>
 
   <div class="container">
+    <div class="row-fluid" id="flash-message">
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      <% end %>
+    </div>
     <div class="row-fluid">
-      <% if flash[:error] %><p class="alert alert-error"><%= error %></p><% end %>
-      <% if flash[:success] %><p class="alert alert-success"><%= success %></p><% end %>
-      <% if flash[:notice] %><p class="alert alert-info"><%= notice %></p><% end %>
-        <%= yield %>
+      <%= yield %>
     </div>
   </div>
 

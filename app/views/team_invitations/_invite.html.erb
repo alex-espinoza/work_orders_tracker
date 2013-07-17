@@ -1,19 +1,22 @@
-<%= form_for [@team, @invitation] do |f| %>
-	<% if @invitation.errors.any? %>
-		<div id="error_explanation">
-			<h2><%= pluralize(@invitation.errors.count, "error") %> prohibited this invitation from being sent:</h2>
+<div class="text-center" id="add-worker-form">
+	<h1>Add worker to your team</h1>
 
-			<ul>
-			<% @invitation.errors.full_messages.each do |msg| %>
-				<li><%= msg %></li>
-			<% end %>
-			</ul>
-		</div>
+	<%= form_for [@team, @invitation], :remote => true do |f| %>
+		<% if @invitation.errors.any? %>
+			<div id="error_explanation">
+				<h2><%= pluralize(@invitation.errors.count, "error") %> prohibited this invitation from being sent:</h2>
+
+				<ul>
+				<% @invitation.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+				</ul>
+			</div>
+		<% end %>
+
+		<div class="control-group"><%= f.label :recipient_email, "Email address", :class => "control-label" %>
+		<div class="controls"><%= f.text_field :recipient_email, :class => "span4" %></div></div>
+
+		<div class="controls"><p><%= f.submit "Invite worker", :class => "flat-butt flat-inner-butt span4", :id => "add-worker-form-submit-button", "data-loading-text" => "Loading..." %></p>
 	<% end %>
-
-
-	<div class="control-group"><%= f.label :recipient_email, "Email address", :class => "control-label" %>
-	<div class="controls"><%= f.text_field :recipient_email, :class => "span4" %></div></div>
-
-	<div class="controls"><p><%= f.submit "Invite worker", :class => "flat-butt flat-inner-butt span4" %></p>
-<% end %>
+</div>

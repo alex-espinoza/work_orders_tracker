@@ -1,0 +1,7 @@
+var btn = $('#add-worker-form-submit-button');
+
+<% if @invitation.save %>
+	$('#add-worker-modal').modal('hide');
+	btn.button('reset');
+	$('#add-worker-form').remove();
+<% end %>

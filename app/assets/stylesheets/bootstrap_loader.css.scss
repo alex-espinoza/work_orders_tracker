@@ -7,6 +7,11 @@ body {
 
 @import "bootstrap-responsive";
 
+.modal {
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
 .navbar .nav {
 	float: right;
 }
