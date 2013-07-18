@@ -14,28 +14,28 @@ body {
 
 .navbar .nav {
 	float: right;
-}
-
-.navbar .nav .signin {
-	color: #999;
-	padding: 10px 15px 10px;
-}
-
-.navbar .nav .signoutlink {
-	padding: 0px;
-	display: inline;
+  .signin {
+  	color: #999;
+  	padding: 10px 15px 10px;
+  }
+  .signoutlink {
+    padding: 0px;
+    display: inline;
+  }
 }
 
 .navbar-inverse .navbar-inner {
-	background-color: #1b3c59;
-	background-image: -moz-linear-gradient(top, #1b3c59, #1b3c59);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1b3c59), to(#1b3c59));
-	background-image: -webkit-linear-gradient(top, #1b3c59, #1b3c59);
-	background-image: -o-linear-gradient(top, #1b3c59, #1b3c59);
-	background-image: linear-gradient(to bottom, #1b3c59, #1b3c59);
-	background-repeat: repeat-x;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF222222', endColorstr='#FF111111', GradientType=0);
-	border-color: #252525;
+  background: {
+  	color: #1b3c59;
+  	image: -moz-linear-gradient(top, #1b3c59, #1b3c59);
+  	image: -webkit-gradient(linear, 0 0, 0 100%, from(#1b3c59), to(#1b3c59));
+  	image: -webkit-linear-gradient(top, #1b3c59, #1b3c59);
+  	image: -o-linear-gradient(top, #1b3c59, #1b3c59);
+  	image: linear-gradient(to bottom, #1b3c59, #1b3c59);
+  	repeat: repeat-x;
+  	color: #252525;
+  }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF222222', endColorstr='#FF111111', GradientType=0);
 }
 
 .horizontal-button-group {
@@ -53,20 +53,24 @@ body {
 
 .table {
 	width: 100%;
-	margin-bottom: 20px;
-	margin-top: 20px;
+  margin: {
+  	bottom: 20px;
+  	top: 20px;
+  }
 }
 
 .label {
-	font-size: 14px;
-	font-weight: normal;
+  font: {
+  	size: 14px;
+  	weight: normal;
+  }
 }
 
 .work-order-unit {
 	padding: 20px;
 	margin-bottom: 30px;
 	color: inherit;
-	background-color: #eeeeee;
+	background-color: #FCF7EB;
 }
 
 .no-line-height {
@@ -83,17 +87,15 @@ body {
 }
 
 .header3 {
-	font-size: 24.5px;
-	margin: 10px 0;
-	font-family: inherit;
-	font-weight: bold;
-	line-height: 40px;
-	color: inherit;
-	text-rendering: optimizelegibility;
-}
-
-.work-order-unit {
-	background-color: #FCF7EB;
+  font: {
+  	size: 24.5px;
+  	family: inherit;
+  	weight: bold;
+  }
+  margin: 10px 0;
+  line-height: 40px;
+  color: inherit;
+  text-rendering: optimizelegibility;
 }
 
 button {
@@ -101,11 +103,13 @@ button {
 }
 
 .flat-butt {
+  font: {
+    family: "Lato", sans-serif;
+    size: 16.5px;
+  }
   display: inline-block;
   margin: 0;
   border-radius: 6px;
-  font-family: "Lato", sans-serif;
-  font-size: 16.5px;
   padding: 12px 20px;
   border: 0;
   background: #34495E;
