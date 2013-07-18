@@ -1,0 +1,8 @@
+$('#create-team-form').remove();
+$('.modal-body').append("<%= j render("teams/new_team") %>");
+
+var btn = $('#create-team-form-submit-button');
+
+btn.click(function() {
+	btn.button('loading');
+});

@@ -1,0 +1,8 @@
+var btn = $('#create-team-form-submit-button');
+
+<% if @team.save %>
+	$('#create-team-modal').modal('hide');
+	btn.button('reset');
+	$('#create-team-form').remove();
+	$('<li><%= link_to @team.team_name, team_path(@team) %></li>').appendTo('#list-team-table');
+<% end %>

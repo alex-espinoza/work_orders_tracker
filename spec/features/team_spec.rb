@@ -6,7 +6,7 @@ describe "Team" do
 	describe "- when being created -" do
 		it "will redirect to team index page on successful team creation." do
 			sign_up_as(new_manager)
-			click_button "Create new team"
+			click_link "Create new team"
 			fill_in "Team name", :with => "Launch Academy Maintenance Team"
 			click_button "Create team"
 			expect(page).to have_content("Launch Academy Maintenance Team")
@@ -18,7 +18,7 @@ describe "Team" do
 	describe "- when being created -" do
 		it "will show an error and stay on the team creation page on an invalid creation attempt." do
 			sign_up_as(new_manager)
-			click_button "Create new team"
+			click_link "Create new team"
 			fill_in "Team name", :with => ""
 			click_button "Create team"
 			expect(page).to have_content("error prohibited this team from being created")

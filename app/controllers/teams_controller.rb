@@ -20,7 +20,11 @@ class TeamsController < ApplicationController
 
   	if @team.save
       @team_membership.create_manager_membership(current_user, @team)
-  		redirect_to teams_path
+      flash[:notice] = "#{@team.team_name} has been created."
+  		respond_to do |format|
+        format.html { redirect_to teams_path }
+        format.js
+      end
   	else
   		render action: "new"
   	end

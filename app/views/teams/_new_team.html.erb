@@ -1,18 +1,22 @@
-<%= form_for @team do |f| %>
-	<% if @team.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@team.errors.count, "error") %> prohibited this team from being created:</h2>
+<div class="text-center" id="create-team-form">
+  <h1>Create a new team</h1>
 
-      <ul>
-      <% @team.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+  <%= form_for @team, :remote => true do |f| %>
+  	<% if @team.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@team.errors.count, "error") %> prohibited this team from being created:</h2>
+
+        <ul>
+        <% @team.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  	<div class="control-group"><%= f.label :team_name, :class => "control-label" %>
+  	<div class="controls"><%= f.text_field :team_name, :class => "span4" %></div></div>
+
+  	<div class="controls"><%= f.submit "Create team", :class => "flat-butt flat-inner-butt span4", :id => "create-team-form-submit-button", "data-loading-text" => "Loading..." %></div>
   <% end %>
-
-	<div class="control-group"><%= f.label :team_name, :class => "control-label" %>
-	<div class="controls"><%= f.text_field :team_name, :class => "span4" %></div></div>
-
-	<div class="controls"><%= f.submit "Create team", :class => "flat-butt flat-inner-butt span4" %></div>
-<% end %>
+</div>
