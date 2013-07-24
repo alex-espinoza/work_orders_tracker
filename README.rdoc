@@ -2,6 +2,8 @@
 
 Currently a work in progress. This program is a work orders tracking system for building/warehouse maintenance teams. Managers can invite workers to a team and easily assign and keep track of jobs.
 
+Currently deployed at: https://ordertrak.herokuapp.com/
+
 ---
 
 == Gems used:
