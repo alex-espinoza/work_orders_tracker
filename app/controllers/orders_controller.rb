@@ -70,6 +70,7 @@ class OrdersController < ApplicationController
 
 		if @order.assigned?
 			@order.complete
+			OrderMailer.work_order_completed(@order).deliver if @order.manager_id != current_user.id
 			redirect_to team_order_path(@team, @order), notice: "Work order has been completed."
 		else
 			render action: "show"

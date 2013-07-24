@@ -7,6 +7,7 @@ describe "Orders" do
 	let!(:manager_membership) { FactoryGirl.create(:invitations_test_membership, role: "manager", user: manager, team: team) }
 	let!(:worker_membership) { FactoryGirl.create(:invitations_test_membership, role: "worker", user: worker, team: team) }
 	let(:valid_work_order) { FactoryGirl.create(:work_order, team: team, manager: manager, worker: worker) }
+	let(:valid_manager_work_order) { FactoryGirl.create(:work_order, team: team, manager: manager, worker: manager) }
 	let(:team_worker_1) { FactoryGirl.create(:team_of_workers) }
 	let(:team_worker_2) { FactoryGirl.create(:team_of_workers) }
 	let(:team_worker_3) { FactoryGirl.create(:team_of_workers) }
@@ -26,6 +27,7 @@ describe "Orders" do
 	describe "- a manager -" do
 		let(:completed_work_order) { FactoryGirl.create(:completed_work_order, team: team, manager: manager, worker: worker) }
 		let(:closed_work_order) { FactoryGirl.create(:closed_work_order, team: team, manager: manager, worker: worker) }
+		after(:each) { ActionMailer::Base.deliveries.clear }
 
 		it "can create and assign a work order if all fields are valid." do
 			sign_in_as(manager)
@@ -201,6 +203,25 @@ describe "Orders" do
 			expect(page).to have_link("Close")
 			expect(page).to have_content("Completed")
 			expect(team.orders.first.status).to eq("completed")
+		end
+
+		it "receives an email notification when a work order they have assigned is marked as complete." do
+			valid_work_order
+			sign_in_as(worker)
+			click_link "Test Maintenance Team"
+			click_link "Wall needs to be repainted"
+			click_link "Complete"
+			notification_email = ActionMailer::Base.deliveries.last
+  		expect(notification_email.body.raw_source).to have_content("The following work order has been marked as complete")
+		end
+
+		it "does not receive a work order complete notification if it was assigned to themself." do
+			valid_manager_work_order
+			sign_in_as(manager)
+			click_link "Test Maintenance Team"
+			click_link "Wall needs to be repainted"
+			click_link "Complete"
+  		expect(ActionMailer::Base.deliveries.length).to eq(0)
 		end
 	end
 
